@@ -9,8 +9,8 @@
     // Validasi waktu akses
     function validateAccess() {
         const now = new Date();
-        const startTime = new Date('2024-09-04T13:00:00');
-        const endTime = new Date('20245-09-04T13:30:00');
+        const startTime = new Date('2024-09-11T13:00:00');
+        const endTime = new Date('20245-09-11T13:30:00');
 
         if (now < startTime || now > endTime) {
             alert('Akses kuis hanya tersedia pada 4 September 2024 pukul 13:00 - 13:30.');
@@ -267,106 +267,106 @@ function sendResultToGoogleSheet(fullName, nim, score) {
 }
 
     // Quiz questions
-questions = [
-  {
-    "question": "Apa yang dimaksud dengan 'raster data model' dalam konteks penginderaan jauh?",
-    "choices": ["Model data vektor", "Model data tabular", "Model data dua dimensi dalam bentuk grid piksel", "Model data tiga dimensi", "Model data temporal"],
-    "answer": "Model data dua dimensi dalam bentuk grid piksel"
-  },
-  {
-    "question": "Apa yang dimaksud dengan 'DN' dalam konteks nilai piksel citra satelit?",
-    "choices": ["Digital Network", "Data Number", "Digital Node", "Density Number", "Digital Number"],
-    "answer": "Digital Number"
-  },
-  {
-    "question": "Dalam komposit warna alami (natural color composite) Landsat, band mana yang digunakan untuk warna merah?",
-    "choices": ["Band 1", "Band 2", "Band 3", "Band 4", "Band 5"],
-    "answer": "Band 3"
-  },
-  {
-    "question": "Apa yang dimaksud dengan 'false-color composite' dalam penginderaan jauh?",
-    "choices": ["Komposit warna yang salah", "Komposit warna yang tidak alami", "Komposit warna yang hanya menggunakan warna primer", "Komposit warna yang menggunakan band inframerah", "Komposit warna yang tidak menggunakan band apapun"],
-    "answer": "Komposit warna yang tidak alami"
-  },
-  {
-    "question": "Dalam sistem warna aditif RGB, apa yang dihasilkan ketika warna merah dan hijau digabungkan?",
-    "choices": ["Biru", "Kuning", "Cyan", "Magenta", "Putih"],
-    "answer": "Kuning"
-  },
-  {
-    "question": "Apa fungsi utama dari band inframerah dekat (near-infrared) dalam citra satelit?",
-    "choices": ["Mendeteksi suhu permukaan", "Membedakan jenis hutan", "Mengukur kedalaman air", "Mendeteksi polusi udara", "Mengukur ketinggian terrain"],
-    "answer": "Membedakan jenis hutan"
-  },
-  {
-    "question": "Dalam Google Earth Engine, apa metode yang digunakan untuk menambahkan band baru ke citra yang sudah ada?",
-    "choices": ["addLayer()", "select()", "rename()", "addBands()", "composite()"],
-    "answer": "addBands()"
-  },
-  {
-    "question": "Apa yang dimaksud dengan 'stable lights' dalam dataset cahaya malam DMSP-OLS?",
-    "choices": ["Cahaya dari bintang", "Cahaya dari kota besar", "Cahaya yang konsisten sepanjang tahun", "Cahaya dari kebakaran hutan", "Cahaya dari petir"],
-    "answer": "Cahaya yang konsisten sepanjang tahun"
-  },
-  {
-    "question": "Dalam komposit perubahan cahaya malam, warna apa yang menunjukkan area yang terang di tahun 2013 tetapi gelap di tahun 2003 dan 1993?",
-    "choices": ["Putih", "Merah", "Hijau", "Biru", "Kuning"],
-    "answer": "Merah"
-  },
-  {
-    "question": "Apa yang ditunjukkan oleh warna cyan dalam komposit RGB menggunakan sistem warna aditif?",
-    "choices": ["Nilai tinggi di band merah dan hijau", "Nilai tinggi di band hijau dan biru", "Nilai tinggi di band merah dan biru", "Nilai tinggi di semua band", "Nilai rendah di semua band"],
-    "answer": "Nilai tinggi di band hijau dan biru"
-  },
-  {
-    "question": "Berapa jumlah band yang terdapat dalam citra Landsat 5 yang digunakan dalam contoh di dokumen?",
-    "choices": ["3", "6", "7", "15", "19"],
-    "answer": "19"
-  },
-  {
-    "question": "Apa yang dimaksud dengan 'metadata' dalam konteks citra satelit?",
-    "choices": ["Data tentang piksel", "Data tentang resolusi spasial", "Data deskriptif tentang citra", "Data tentang lokasi geografis", "Data tentang waktu akuisisi"],
-    "answer": "Data deskriptif tentang citra"
-  },
-  {
-    "question": "Apa metode yang digunakan untuk mencetak metadata citra ke Console panel di Google Earth Engine?",
-    "choices": ["console.log()", "Map.addLayer()", "print()", "ee.Image()", "ee.print()"],
-    "answer": "print()"
-  },
-  {
-    "question": "Apa yang dimaksud dengan 'additive color system' dalam konteks visualisasi citra satelit?",
-    "choices": ["Sistem warna yang mengurangi intensitas cahaya", "Sistem warna yang menambahkan pigmen", "Sistem warna yang menggabungkan warna primer cahaya", "Sistem warna yang menggunakan warna sekunder", "Sistem warna yang menggunakan skala keabuan"],
-    "answer": "Sistem warna yang menggabungkan warna primer cahaya"
-  },
-  {
-    "question": "Dalam komposit perubahan cahaya malam, apa yang ditunjukkan oleh warna kuning?",
-    "choices": ["Area yang terang di 1993 dan 2003, tapi gelap di 2013", "Area yang terang di 2013 dan 2003, tapi gelap di 1993", "Area yang terang di 1993 dan 2013, tapi gelap di 2003", "Area yang gelap di semua tahun", "Area yang terang di semua tahun"],
-    "answer": "Area yang terang di 2013 dan 2003, tapi gelap di 1993"
-  },
-  {
-    "question": "Apa fungsi dari metode 'select()' dalam Google Earth Engine?",
-    "choices": ["Memilih citra", "Memilih lokasi geografis", "Memilih band tertentu dari citra", "Memilih resolusi spasial", "Memilih waktu akuisisi"],
-    "answer": "Memilih band tertentu dari citra"
-  },
-  {
-    "question": "Apa yang ditunjukkan oleh warna putih dalam komposit RGB menggunakan sistem warna aditif?",
-    "choices": ["Nilai rendah di semua band", "Nilai tinggi hanya di band merah", "Nilai tinggi hanya di band hijau", "Nilai tinggi hanya di band biru", "Nilai tinggi di semua band"],
-    "answer": "Nilai tinggi di semua band"
-  },
-  {
-    "question": "Apa yang dimaksud dengan 'true-color composite' dalam visualisasi citra satelit?",
-    "choices": ["Komposit yang hanya menggunakan warna primer", "Komposit yang menggunakan band inframerah", "Komposit yang menyerupai apa yang dilihat mata manusia", "Komposit yang hanya menggunakan satu band", "Komposit yang menggunakan semua band citra"],
-    "answer": "Komposit yang menyerupai apa yang dilihat mata manusia"
-  },
-  {
-    "question": "Dalam Google Earth Engine, apa fungsi dari parameter 'min' dan 'max' saat menambahkan layer ke peta?",
-    "choices": ["Menentukan ukuran piksel", "Menentukan resolusi spasial", "Menentukan rentang nilai untuk visualisasi", "Menentukan jumlah band", "Menentukan lokasi geografis"],
-    "answer": "Menentukan rentang nilai untuk visualisasi"
-  },
-  {
-    "question": "Apa yang ditunjukkan oleh gradien warna putih-kuning-merah di sekitar kota dalam komposit perubahan cahaya malam?",
-    "choices": ["Penurunan populasi", "Peningkatan polusi udara", "Pola urban sprawl", "Perubahan suhu permukaan", "Perubahan vegetasi"],
-    "answer": "Pola urban sprawl"
-  }
-];
+    questions = [
+      {
+        "question": "Apa yang dimaksud dengan ImageCollection dalam Google Earth Engine?",
+        "choices": ["Kumpulan gambar acak", "Struktur penyimpanan data yang mengorganisir banyak gambar", "Album foto digital", "Folder berisi file gambar", "Kumpulan metadata citra"],
+        "answer": "Struktur penyimpanan data yang mengorganisir banyak gambar"
+      },
+      {
+        "question": "Apa fungsi dari metode filterDate pada ImageCollection?",
+        "choices": ["Menghapus gambar dari koleksi", "Memperbaiki kualitas gambar", "Menyaring gambar berdasarkan rentang tanggal tertentu", "Mengubah format tanggal gambar", "Mengurutkan gambar berdasarkan tanggal"],
+        "answer": "Menyaring gambar berdasarkan rentang tanggal tertentu"
+      },
+      {
+        "question": "Metode apa yang digunakan untuk memilih gambar pertama dari ImageCollection?",
+        "choices": ["select()", "first()", "get()", "head()", "start()"],
+        "answer": "first()"
+      },
+      {
+        "question": "Apa yang dimaksud dengan 'surface reflectance' dalam konteks citra satelit?",
+        "choices": ["Pantulan cahaya dari permukaan air", "Estimasi rasio radiasi ke atas dan ke bawah di permukaan Bumi", "Refleksi atmosfer", "Pantulan cahaya dari awan", "Kecerahan permukaan Bumi"],
+        "answer": "Estimasi rasio radiasi ke atas dan ke bawah di permukaan Bumi"
+      },
+      {
+        "question": "Apa keuntungan menggunakan citra komposit pra-olah dibandingkan citra tunggal?",
+        "choices": ["Lebih murah", "Resolusi lebih tinggi", "Mengurangi pengaruh awan dan artefak atmosfer", "Ukuran file lebih kecil", "Warna lebih cerah"],
+        "answer": "Mengurangi pengaruh awan dan artefak atmosfer"
+      },
+      {
+        "question": "Dataset apa yang digunakan untuk memetakan area terbakar bulanan menggunakan data MODIS?",
+        "choices": ["MODIS/006/MOD09GA", "MODIS/006/MCD43A4", "MODIS/006/MCD64A1", "MODIS/006/MOD11A1", "MODIS/006/MYD13Q1"],
+        "answer": "MODIS/006/MCD64A1"
+      },
+      {
+        "question": "Apa yang diukur oleh dataset metana dari Sentinel-5 yang tersedia di Earth Engine?",
+        "choices": ["Konsentrasi metana di permukaan", "Volume mixing ratio metana di udara kering", "Emisi metana dari industri", "Penyerapan metana oleh tumbuhan", "Produksi metana dari ternak"],
+        "answer": "Volume mixing ratio metana di udara kering"
+      },
+      {
+        "question": "Dataset apa yang menyediakan data suhu udara bulanan dalam Earth Engine?",
+        "choices": ["MODIS Land Surface Temperature", "ECMWF/ERA5/MONTHLY", "NOAA Global Surface Temperature", "NASA GISS Surface Temperature Analysis", "HadCRUT4"],
+        "answer": "ECMWF/ERA5/MONTHLY"
+      },
+      {
+        "question": "Berapa jumlah kelas tutupan lahan yang digunakan dalam dataset ESA WorldCover?",
+        "choices": ["5", "8", "11", "15", "20"],
+        "answer": "11"
+      },
+      {
+        "question": "Apa yang menjadi tahun dasar (base year) untuk analisis perubahan hutan global dalam dataset Hansen et al.?",
+        "choices": ["1990", "1995", "2000", "2005", "2010"],
+        "answer": "2000"
+      },
+      {
+        "question": "Dataset apa yang menyediakan estimasi jumlah populasi untuk setiap sel grid di seluruh permukaan Bumi?",
+        "choices": ["WorldPop", "LandScan", "GHSL", "GPWv411", "Oak Ridge National Laboratory Global Population Dataset"],
+        "answer": "GPWv411"
+      },
+      {
+        "question": "Apa kepanjangan dari DEM dalam konteks data elevasi?",
+        "choices": ["Digital Elevation Model", "Data Elevation Measurement", "Digital Earth Map", "Detailed Elevation Matrix", "Digital Elevation Measurement"],
+        "answer": "Digital Elevation Model"
+      },
+      {
+        "question": "Apa nama dataset DEM global yang tersedia di Earth Engine dan diproduksi oleh NASA?",
+        "choices": ["SRTM", "ASTER GDEM", "NASADEM", "ALOS World 3D", "TanDEM-X"],
+        "answer": "NASADEM"
+      },
+      {
+        "question": "Apa fungsi dari metode filterBounds pada ImageCollection?",
+        "choices": ["Menyaring gambar berdasarkan resolusi spasial", "Menyaring gambar berdasarkan lokasi geografis", "Menyaring gambar berdasarkan ukuran file", "Menyaring gambar berdasarkan kualitas", "Menyaring gambar berdasarkan sensor"],
+        "answer": "Menyaring gambar berdasarkan lokasi geografis"
+      },
+      {
+        "question": "Dalam visualisasi citra Landsat, apa yang biasanya direpresentasikan oleh kombinasi band 4-3-2?",
+        "choices": ["Citra inframerah", "Citra ultraviolet", "Citra true color", "Citra false color", "Citra termal"],
+        "answer": "Citra true color"
+      },
+      {
+        "question": "Apa yang dimaksud dengan 'palette' dalam parameter visualisasi Earth Engine?",
+        "choices": ["Ukuran gambar", "Skala warna untuk menampilkan data", "Format file gambar", "Resolusi spasial", "Tingkat transparansi"],
+        "answer": "Skala warna untuk menampilkan data"
+      },
+      {
+        "question": "Berapa lama periode pengambilan data yang digunakan untuk menghasilkan komposit harian MODIS MCD43A4?",
+        "choices": ["7 hari", "16 hari", "30 hari", "60 hari", "90 hari"],
+        "answer": "16 hari"
+      },
+      {
+        "question": "Apa satuan suhu yang digunakan dalam dataset ERA5 Monthly?",
+        "choices": ["Celsius", "Fahrenheit", "Kelvin", "Rankine", "Réaumur"],
+        "answer": "Kelvin"
+      },
+      {
+        "question": "Apa yang direpresentasikan oleh band 'lossyear' dalam dataset Global Forest Change?",
+        "choices": ["Tahun penanaman hutan", "Tahun terjadinya kebakaran hutan", "Tahun hilangnya tutupan hutan", "Tahun pemulihan hutan", "Tahun pengukuran tutupan hutan"],
+        "answer": "Tahun hilangnya tutupan hutan"
+      },
+      {
+        "question": "Apa fungsi dari Map.centerObject() dalam script Earth Engine?",
+        "choices": ["Memperbesar gambar", "Mengubah proyeksi peta", "Memusatkan tampilan peta pada objek tertentu", "Mengubah orientasi peta", "Menambahkan objek ke peta"],
+        "answer": "Memusatkan tampilan peta pada objek tertentu"
+      }
+    ];
 })();

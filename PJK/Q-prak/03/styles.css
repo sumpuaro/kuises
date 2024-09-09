@@ -1,5 +1,5 @@
 :root {
-    --primary-color: #4a90e2;
+    --primary-color: #2c5eaa;
     --secondary-color: #f5a623;
     --background-color: #f0f4f8;
     --text-color: #333;
@@ -70,7 +70,7 @@ button {
 }
 
 button:hover {
-    background-color: #357abd;
+    background-color: #f6f208;
 }
 
 .quiz-container {

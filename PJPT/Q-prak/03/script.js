@@ -204,7 +204,7 @@
   }
 
   function sendResultToGoogleSheet(fullName, nim, score) {
-      const webAppUrl = 'https://script.google.com/macros/s/AKfycbxWtm1SKkZ9oDhvvJ9qsuDU2MslV6OGwnFYT-SoB-jVx8TUMtcFL7uORzluODKKkcL0/exec';
+      const webAppUrl = 'https://script.google.com/macros/s/AKfycbx64b7_TbZZ4F1vkDxI8eh5RcONi0caUVq8Q4nEgx-YWiBbJvCQhMvZSGC-_q9Zw07t/exec';
       const now = new Date();
       const date = now.toLocaleDateString('id-ID');
       const time = now.toLocaleTimeString('id-ID');
@@ -285,225 +285,225 @@
 
     // Quiz questions
     questions = [
-  {
-    "question": "Apa format file yang umumnya digunakan saat mengimpor data berbasis teks ke Microsoft Access?",
-    "choices": [
-      "DOC",
-      "PDF",
-      "CSV",
-      "JPG",
-      "EXE"
-    ],
-    "answer": "CSV"
-  },
-  {
-    "question": "Dalam proses impor data dari Excel ke Access, apa yang dimaksud dengan 'penanganan baris judul'?",
-    "choices": [
-      "Menghapus baris judul",
-      "Menjadikan baris pertama sebagai nama kolom",
-      "Membuat baris judul baru",
-      "Mengenkripsi baris judul",
-      "Menggandakan baris judul"
-    ],
-    "answer": "Menjadikan baris pertama sebagai nama kolom"
-  },
-  {
-    "question": "Apa fungsi utama dari 'wizard import teks' di Microsoft Access?",
-    "choices": [
-      "Untuk membuat tabel baru",
-      "Untuk mengedit teks dalam tabel",
-      "Untuk menganalisis dan mengimpor data dari file teks",
-      "Untuk mengekspor data ke file teks",
-      "Untuk menghapus teks dari tabel"
-    ],
-    "answer": "Untuk menganalisis dan mengimpor data dari file teks"
-  },
-  {
-    "question": "Apa yang dimaksud dengan 'delimiter' dalam konteks impor file teks?",
-    "choices": [
-      "Karakter pembatas antar kolom data",
-      "Batas maksimum jumlah baris",
-      "Tanda akhir file",
-      "Format encoding file",
-      "Jenis font yang digunakan"
-    ],
-    "answer": "Karakter pembatas antar kolom data"
-  },
-  {
-    "question": "Bagaimana cara terbaik mengatasi masalah ketidakcocokan tipe data saat mengimpor dari Excel ke Access?",
-    "choices": [
-      "Mengabaikan data yang tidak cocok",
-      "Menghapus kolom yang bermasalah",
-      "Menyesuaikan tipe data di Access sebelum impor",
-      "Mengubah semua data menjadi teks",
-      "Membatalkan proses impor"
-    ],
-    "answer": "Menyesuaikan tipe data di Access sebelum impor"
-  },
-  {
-    "question": "Apa yang harus dilakukan jika ada nilai yang hilang saat mengimpor data?",
-    "choices": [
-      "Membatalkan impor",
-      "Mengisi nilai yang hilang dengan nol",
-      "Mengabaikan baris dengan nilai yang hilang",
-      "Mengevaluasi dan memutuskan penanganan berdasarkan konteks data",
-      "Menghapus kolom dengan nilai yang hilang"
-    ],
-    "answer": "Mengevaluasi dan memutuskan penanganan berdasarkan konteks data"
-  },
-  {
-    "question": "Apa keuntungan menggunakan file CSV untuk impor data ke Access?",
-    "choices": [
-      "Ukuran file yang lebih kecil",
-      "Kemampuan menyimpan format sel",
-      "Dukungan untuk rumus kompleks",
-      "Kompatibilitas yang tinggi dengan berbagai aplikasi",
-      "Kemampuan menyimpan gambar"
-    ],
-    "answer": "Kompatibilitas yang tinggi dengan berbagai aplikasi"
-  },
-  {
-    "question": "Bagaimana cara terbaik untuk mempersiapkan file teks sebelum diimpor ke Access?",
-    "choices": [
-      "Mengenkripsi file",
-      "Mengompres file",
-      "Membersihkan data dan memastikan konsistensi format",
-      "Mengubah semua data menjadi huruf kapital",
-      "Menghapus semua spasi dalam file"
-    ],
-    "answer": "Membersihkan data dan memastikan konsistensi format"
-  },
-  {
-    "question": "Apa yang dimaksud dengan 'pemetaan tipe data' dalam proses impor?",
-    "choices": [
-      "Membuat peta visual dari data",
-      "Mencocokkan tipe data sumber dengan tipe data di Access",
-      "Mengubah semua data menjadi satu tipe",
-      "Membuat indeks untuk setiap tipe data",
-      "Menghitung jumlah tipe data berbeda"
-    ],
-    "answer": "Mencocokkan tipe data sumber dengan tipe data di Access"
-  },
-  {
-    "question": "Bagaimana cara mengurutkan data dalam tampilan lembar data Access?",
-    "choices": [
-      "Menggunakan fungsi SORT() dalam query",
-      "Menekan tombol F4",
-      "Klik kanan pada kolom dan pilih opsi pengurutan",
-      "Data selalu terurut otomatis",
-      "Mengimpor ulang data dalam urutan yang diinginkan"
-    ],
-    "answer": "Klik kanan pada kolom dan pilih opsi pengurutan"
-  },
-  {
-    "question": "Apa fungsi dari filter dalam tampilan lembar data?",
-    "choices": [
-      "Untuk menghapus data yang tidak diinginkan",
-      "Untuk mengubah warna tampilan data",
-      "Untuk menampilkan hanya data yang memenuhi kriteria tertentu",
-      "Untuk menggabungkan beberapa tabel",
-      "Untuk membuat backup data"
-    ],
-    "answer": "Untuk menampilkan hanya data yang memenuhi kriteria tertentu"
-  },
-  {
-    "question": "Bagaimana cara terbaik untuk memodifikasi data yang sudah ada dalam lembar data?",
-    "choices": [
-      "Menghapus dan memasukkan ulang seluruh baris",
-      "Mengklik sel yang ingin diubah dan mengetik nilai baru",
-      "Mengimpor ulang seluruh dataset",
-      "Membuat tabel baru untuk setiap perubahan",
-      "Menggunakan query untuk mengubah data"
-    ],
-    "answer": "Mengklik sel yang ingin diubah dan mengetik nilai baru"
-  },
-  {
-    "question": "Apa yang dimaksud dengan 'range sel' dalam konteks impor dari Excel?",
-    "choices": [
-      "Jarak antar sel dalam spreadsheet",
-      "Rentang nilai yang diperbolehkan dalam sel",
-      "Area sel yang akan diimpor ke Access",
-      "Jumlah maksimum sel yang dapat diimpor",
-      "Ukuran font dalam sel Excel"
-    ],
-    "answer": "Area sel yang akan diimpor ke Access"
-  },
-  {
-    "question": "Bagaimana cara menambahkan catatan baru dalam tampilan lembar data Access?",
-    "choices": [
-      "Menggunakan tombol Insert pada keyboard",
-      "Memilih 'New Record' dari menu File",
-      "Mengklik baris kosong di bagian bawah lembar data",
-      "Membuat tabel baru untuk setiap catatan",
-      "Mengimpor data baru dari file eksternal"
-    ],
-    "answer": "Mengklik baris kosong di bagian bawah lembar data"
-  },
-  {
-    "question": "Apa yang harus dilakukan jika tanda kutip dalam file teks menyebabkan masalah saat impor?",
-    "choices": [
-      "Menghapus semua tanda kutip",
-      "Menggunakan opsi 'Text Qualifier' dalam wizard impor",
-      "Mengubah format file menjadi Excel",
-      "Membatalkan impor",
-      "Mengganti tanda kutip dengan karakter lain"
-    ],
-    "answer": "Menggunakan opsi 'Text Qualifier' dalam wizard impor"
-  },
-  {
-    "question": "Bagaimana cara terbaik untuk memastikan integritas data setelah proses impor?",
-    "choices": [
-      "Menghapus data yang mencurigakan",
-      "Melakukan validasi manual pada setiap baris",
-      "Menggunakan alat validasi bawaan Access dan memeriksa sampel data",
-      "Mengabaikan proses validasi",
-      "Mengimpor ulang data beberapa kali"
-    ],
-    "answer": "Menggunakan alat validasi bawaan Access dan memeriksa sampel data"
-  },
-  {
-    "question": "Apa fungsi dari pengaturan format tampilan dalam lembar data?",
-    "choices": [
-      "Hanya untuk estetika",
-      "Untuk mengenkripsi data",
-      "Untuk meningkatkan kecepatan database",
-      "Untuk mempermudah pembacaan dan interpretasi data",
-      "Untuk mengurangi ukuran file database"
-    ],
-    "answer": "Untuk mempermudah pembacaan dan interpretasi data"
-  },
-  {
-    "question": "Bagaimana cara menghapus catatan dalam tampilan lembar data Access?",
-    "choices": [
-      "Menekan tombol Delete pada keyboard",
-      "Mengosongkan semua sel dalam baris",
-      "Mengklik kanan pada nomor baris dan memilih 'Delete Record'",
-      "Menghapus tabel dan membuatnya kembali",
-      "Menggunakan query DELETE"
-    ],
-    "answer": "Mengklik kanan pada nomor baris dan memilih 'Delete Record'"
-  },
-  {
-    "question": "Apa yang dimaksud dengan 'pengaturan format kolom' dalam impor file teks?",
-    "choices": [
-      "Mengubah warna latar belakang kolom",
-      "Menentukan tipe data dan cara interpretasi data untuk setiap kolom",
-      "Menghitung lebar optimal untuk setiap kolom",
-      "Menambahkan border pada setiap kolom",
-      "Mengganti nama kolom secara otomatis"
-    ],
-    "answer": "Menentukan tipe data dan cara interpretasi data untuk setiap kolom"
-  },
-  {
-    "question": "Apa keuntungan menggunakan fungsi otomatis dalam Microsoft Access untuk memasukkan data?",
-    "choices": [
-      "Mengurangi ukuran file database",
-      "Meningkatkan keamanan data",
-      "Mempercepat proses input dan mengurangi kesalahan",
-      "Mengenkripsi data secara otomatis",
-      "Membuat backup otomatis setiap kali data dimasukkan"
-    ],
-    "answer": "Mempercepat proses input dan mengurangi kesalahan"
-  }
+      {
+        "question": "Apa yang dimaksud dengan ImageCollection dalam Earth Engine?",
+        "choices": [
+        "Kumpulan gambar acak",
+        "Satu gambar satelit tunggal",
+        "Kumpulan gambar terorganisir dengan informasi lokasi dan tanggal",
+        "Album foto digital",
+        "Koleksi seni visual"
+        ],
+        "answer": "Kumpulan gambar terorganisir dengan informasi lokasi dan tanggal"
+        },
+        {
+        "question": "Apa fungsi utama dari filterDate dalam Earth Engine?",
+        "choices": [
+        "Menghapus gambar lama",
+        "Menyortir gambar berdasarkan kualitas",
+        "Memperbaiki tanggal yang salah pada metadata",
+        "Mempersempit rentang tanggal dari ImageCollection",
+        "Mengubah format tanggal pada gambar"
+        ],
+        "answer": "Mempersempit rentang tanggal dari ImageCollection"
+        },
+        {
+        "question": "Apa yang dilakukan oleh fungsi filterBounds dalam Earth Engine?",
+        "choices": [
+        "Memperbesar gambar",
+        "Memotong gambar",
+        "Memfilter gambar berdasarkan lokasi",
+        "Menghapus batas gambar",
+        "Menambahkan batas pada gambar"
+        ],
+        "answer": "Memfilter gambar berdasarkan lokasi"
+        },
+        {
+        "question": "Apa yang dimaksud dengan 'surface reflectance' dalam konteks citra satelit?",
+        "choices": [
+        "Pantulan cahaya dari permukaan laut",
+        "Estimasi rasio radiasi ke atas dan ke bawah di permukaan Bumi",
+        "Refleksi cahaya dari awan",
+        "Pantulan cahaya dari atmosfer",
+        "Kecerahan gambar satelit"
+        ],
+        "answer": "Estimasi rasio radiasi ke atas dan ke bawah di permukaan Bumi"
+        },
+        {
+        "question": "Apa keuntungan utama dari menggunakan citra 'surface reflectance' dibandingkan citra mentah?",
+        "choices": [
+        "Resolusi yang lebih tinggi",
+        "Ukuran file yang lebih kecil",
+        "Koreksi efek atmosfer",
+        "Warna yang lebih cerah",
+        "Cakupan area yang lebih luas"
+        ],
+        "answer": "Koreksi efek atmosfer"
+        },
+        {
+        "question": "Apa yang dimaksud dengan pre-made composites dalam Earth Engine?",
+        "choices": [
+        "Gambar yang dibuat sebelum peluncuran satelit",
+        "Gabungan beberapa gambar terbaik dari suatu periode",
+        "Gambar yang diambil pada waktu yang sama setiap hari",
+        "Koleksi gambar yang belum diproses",
+        "Gambar yang dibuat oleh pengguna Earth Engine"
+        ],
+        "answer": "Gabungan beberapa gambar terbaik dari suatu periode"
+        },
+        {
+        "question": "Berapa resolusi spasial umum dari band visible MODIS?",
+        "choices": [
+        "10 m",
+        "30 m",
+        "100 m",
+        "250 m",
+        "500 m"
+        ],
+        "answer": "500 m"
+        },
+        {
+        "question": "Apa yang diukur oleh dataset Sentinel-5 yang dibahas dalam bab ini?",
+        "choices": [
+        "Suhu permukaan",
+        "Ketinggian awan",
+        "Konsentrasi metana",
+        "Kecepatan angin",
+        "Tingkat hujan"
+        ],
+        "answer": "Konsentrasi metana"
+        },
+        {
+        "question": "Apa nama dataset cuaca dan iklim yang digunakan dalam contoh di bab ini?",
+        "choices": [
+        "NOAA Global Forecast System",
+        "ERA5",
+        "WorldClim",
+        "CHIRPS",
+        "MERRA-2"
+        ],
+        "answer": "ERA5"
+        },
+        {
+        "question": "Berapa jumlah kelas tutupan lahan yang digunakan dalam dataset ESA WorldCover?",
+        "choices": [
+        "5",
+        "8",
+        "11",
+        "15",
+        "20"
+        ],
+        "answer": "11"
+        },
+        {
+        "question": "Apa tahun dasar yang digunakan dalam dataset Global Forest Change?",
+        "choices": [
+        "1990",
+        "1995",
+        "2000",
+        "2005",
+        "2010"
+        ],
+        "answer": "2000"
+        },
+        {
+        "question": "Apa yang diukur oleh dataset Gridded Population of the World?",
+        "choices": [
+        "Kepadatan penduduk",
+        "Pertumbuhan penduduk",
+        "Migrasi penduduk",
+        "Jumlah penduduk per sel grid",
+        "Usia rata-rata penduduk"
+        ],
+        "answer": "Jumlah penduduk per sel grid"
+        },
+        {
+        "question": "Apa singkatan dari DEM dalam konteks data elevasi?",
+        "choices": [
+        "Digital Elevation Method",
+        "Digital Earth Model",
+        "Digitized Elevation Map",
+        "Digital Elevation Model",
+        "Digital Earth Measurement"
+        ],
+        "answer": "Digital Elevation Model"
+        },
+        {
+        "question": "Apa nama dataset DEM global yang digunakan dalam contoh di bab ini?",
+        "choices": [
+        "SRTM",
+        "ASTER GDEM",
+        "NASADEM",
+        "TanDEM-X",
+        "ALOS World 3D"
+        ],
+        "answer": "NASADEM"
+        },
+        {
+        "question": "Apa fungsi dari Map.centerObject dalam Earth Engine?",
+        "choices": [
+        "Membuat objek baru di tengah peta",
+        "Menghapus objek di tengah peta",
+        "Memusatkan tampilan peta pada objek tertentu",
+        "Mengukur jarak dari pusat ke objek",
+        "Merotasi peta di sekitar objek pusat"
+        ],
+        "answer": "Memusatkan tampilan peta pada objek tertentu"
+        },
+        {
+        "question": "Apa yang dilakukan oleh fungsi first() pada ImageCollection?",
+        "choices": [
+        "Menghapus gambar pertama",
+        "Memindahkan gambar pertama ke akhir koleksi",
+        "Mengembalikan gambar pertama dari koleksi",
+        "Mengurutkan koleksi berdasarkan gambar pertama",
+        "Menggabungkan semua gambar menjadi satu"
+        ],
+        "answer": "Mengembalikan gambar pertama dari koleksi"
+        },
+        {
+        "question": "Apa yang dimaksud dengan 'palette' dalam parameter visualisasi Earth Engine?",
+        "choices": [
+        "Alat untuk melukis di atas gambar",
+        "Daftar warna untuk menampilkan data",
+        "Jenis sensor satelit",
+        "Metode kompresi gambar",
+        "Algoritma untuk meningkatkan kontras"
+        ],
+        "answer": "Daftar warna untuk menampilkan data"
+        },
+        {
+        "question": "Apa unit pengukuran yang digunakan dalam dataset ERA5 untuk suhu udara?",
+        "choices": [
+        "Celsius",
+        "Fahrenheit",
+        "Kelvin",
+        "Rankine",
+        "Réaumur"
+        ],
+        "answer": "Kelvin"
+        },
+        {
+        "question": "Berapa rentang tahun yang dicakup oleh dataset Global Forest Change yang dibahas dalam bab ini?",
+        "choices": [
+        "1990-2010",
+        "1995-2015",
+        "2000-2020",
+        "2005-2025",
+        "2010-2030"
+        ],
+        "answer": "2000-2020"
+        },
+        {
+        "question": "Apa yang ditunjukkan oleh warna merah dalam visualisasi dataset Global Forest Change?",
+        "choices": [
+        "Area hutan yang tersisa",
+        "Area yang terbakar",
+        "Area dengan pertumbuhan hutan baru",
+        "Area dengan kehilangan hutan yang lebih baru",
+        "Area tanpa perubahan"
+        ],
+        "answer": "Area dengan kehilangan hutan yang lebih baru"
+        }
 ];
 })();

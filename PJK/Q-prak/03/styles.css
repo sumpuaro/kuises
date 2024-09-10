@@ -1,14 +1,8 @@
 :root {
-    --primary-color: #2c5eaa;
+    --primary-color: #4a90e2;
     --secondary-color: #f5a623;
     --background-color: #f0f4f8;
     --text-color: #333;
-}
-
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
 }
 
 body {
@@ -16,90 +10,94 @@ body {
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--background-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
     max-width: 800px;
-    width: 90%;
-    background-color: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 h1, h2, h3 {
     color: var(--primary-color);
-    margin-bottom: 1rem;
+    text-align: center;
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
-    text-align: left;
+    margin-bottom: 20px;
 }
 
 label {
     display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 input[type="text"],
 input[type="number"],
 select {
     width: 100%;
-    padding: 0.75rem;
+    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: 16px;
 }
 
 button {
     background-color: var(--primary-color);
     color: white;
     border: none;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
+    padding: 10px 20px;
+    font-size: 16px;
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.3s ease;
-    margin-top: 1rem;
 }
 
 button:hover {
-    background-color: #f6f208;
+    background-color: #357abd;
 }
 
-.quiz-container {
+#clear-access-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#clear-access-btn {
+    background-color: #f44336;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#quiz-container {
     background-color: white;
     border-radius: 8px;
-    padding: 2rem;
+    padding: 20px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .question {
-    font-size: 1.2rem;
+    font-size: 18px;
     font-weight: bold;
-    margin-bottom: 1.5rem;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
 .options {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
 }
 
 .option {
-    margin-bottom: 1rem;
-    padding: 1rem;
+    margin-bottom: 10px;
+    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    text-align: left;
 }
 
 .option:hover {
@@ -112,10 +110,11 @@ button:hover {
 }
 
 .timer {
-    font-size: 1.2rem;
+    font-size: 18px;
     font-weight: bold;
     color: var(--secondary-color);
-    margin-bottom: 1rem;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
 .progress-bar {
@@ -124,7 +123,7 @@ button:hover {
     background-color: #ddd;
     border-radius: 5px;
     overflow: hidden;
-    margin-bottom: 1.5rem;
+    margin-bottom: 20px;
 }
 
 .progress {
@@ -133,8 +132,10 @@ button:hover {
     transition: width 0.5s ease;
 }
 
-.hidden {
-    display: none;
+#question-info {
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
 #result-container {
@@ -142,34 +143,14 @@ button:hover {
 }
 
 #score {
-    font-size: 2rem;
+    font-size: 24px;
     font-weight: bold;
     color: var(--primary-color);
 }
 
-#question-info {
-    font-size: 1rem;
-    margin-bottom: 1rem;
-    color: var(--secondary-color);
-}
-
-small {
-    display: block;
-    font-size: 0.8rem;
-    color: #666;
-    margin-top: 0.25rem;
-}
-
-#result-message {
-    font-size: 1.2rem;
-    margin-top: 1rem;
-    font-weight: bold;
-}
-
 @media (max-width: 600px) {
     .container {
-        width: 95%;
-        padding: 1rem;
+        padding: 10px;
     }
     
     button {

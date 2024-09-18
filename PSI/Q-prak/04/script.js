@@ -10,500 +10,500 @@
   // Validasi waktu akses
   function validateAccess() {
     const now = new Date();
-    const startTime = new Date('2024-09-17T10:00:00');
-    const endTime = new Date('2024-09-17T10:30:00');
+    const startTime = new Date('2024-09-10T10:00:00');
+    const endTime = new Date('2024-09-10T10:30:00');
 
-    if (now < startTime || now > endTime) {
-        alert(`Akses kuis hanya tersedia pada ${startTime.toLocaleDateString()} pukul ${startTime.toLocaleTimeString()} - ${endTime.toLocaleTimeString()}.`);
-        return false;
+        if (now < startTime || now > endTime) {
+            alert(`Akses kuis hanya tersedia pada ${startTime.toLocaleDateString()} pukul ${startTime.toLocaleTimeString()} - ${endTime.toLocaleTimeString()}.`);
+            return false;
+        }
+        return true;
     }
-    return true;
-}
 
-  // Cek akses ganda
-  function checkDuplicateAccess(fullname, nim, angkatan) {
-      const accessKey = `${quizId}_${fullname}_${nim}_${angkatan}`;
-      if (localStorage.getItem(accessKey)) {
-          if (confirm('Anda sudah mengakses kuis ini sebelumnya. Apakah Anda ingin mencoba lagi? Ini akan menghapus akses sebelumnya.')) {
-              localStorage.removeItem(accessKey);
-              return true;
-          }
-          return false;
-      }
-      localStorage.setItem(accessKey, 'true');
-      return true;
-  }
+    // Cek akses ganda
+    function checkDuplicateAccess(fullname, nim, angkatan) {
+        const accessKey = `${quizId}_${fullname}_${nim}_${angkatan}`;
+        if (localStorage.getItem(accessKey)) {
+            if (confirm('Anda sudah mengakses kuis ini sebelumnya. Apakah Anda ingin mencoba lagi? Ini akan menghapus akses sebelumnya.')) {
+                localStorage.removeItem(accessKey);
+                return true;
+            }
+            return false;
+        }
+        localStorage.setItem(accessKey, 'true');
+        return true;
+    }
 
-  // Fullscreen functions
-  function enterFullscreen(element) {
-      if(element.requestFullscreen) {
-          element.requestFullscreen();
-      } else if(element.mozRequestFullScreen) {
-          element.mozRequestFullScreen();
-      } else if(element.webkitRequestFullscreen) {
-          element.webkitRequestFullscreen();
-      } else if(element.msRequestFullscreen) {
-          element.msRequestFullscreen();
-      }
-  }
+    // Fullscreen functions
+    function enterFullscreen(element) {
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) {
+            element.msRequestFullscreen();
+        }
+    }
 
-  function handleFullscreenChange() {
-      if (!document.fullscreenElement && !document.webkitFullscreenElement && 
-          !document.mozFullScreenElement && !document.msFullscreenElement) {
-          if (isQuizActive) {
-              alert("Mohon tetap dalam mode fullscreen selama kuis berlangsung.");
-              enterFullscreen(document.documentElement);
-          }
-      }
-  }
+    function handleFullscreenChange() {
+        if (!document.fullscreenElement && !document.webkitFullscreenElement &&
+            !document.mozFullScreenElement && !document.msFullscreenElement) {
+            if (isQuizActive) {
+                alert("Mohon tetap dalam mode fullscreen selama kuis berlangsung.");
+                enterFullscreen(document.documentElement);
+            }
+        }
+    }
 
-  function exitFullscreen() {
-      if(document.exitFullscreen) {
-          document.exitFullscreen();
-      } else if(document.mozCancelFullScreen) {
-          document.mozCancelFullScreen();
-      } else if(document.webkitExitFullscreen) {
-          document.webkitExitFullscreen();
-      } else if(document.msExitFullscreen) {
-          document.msExitFullscreen();
-      }
-  }
+    function exitFullscreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
 
-  function preventExitFullscreen(event) {
-      if (isQuizActive && (event.key === 'Escape' || event.keyCode === 27)) {
-          event.preventDefault();
-          event.stopPropagation();
-          return false;
-      }
-      
-      if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
-          enterFullscreen(document.documentElement);
-      }
-  }
+    function preventExitFullscreen(event) {
+        if (isQuizActive && (event.key === 'Escape' || event.keyCode === 27)) {
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+        }
 
-  // Quiz functions
-  function shuffleArray(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
-      }
-  }
+        if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
+            enterFullscreen(document.documentElement);
+        }
+    }
 
-  function startQuiz() {
-      if (!validateAccess()) return;
+    // Quiz functions
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
 
-      userData.fullname = document.getElementById('fullname').value;
-      userData.nim = document.getElementById('nim').value;
-      userData.angkatan = document.getElementById('angkatan').value;
+    function startQuiz() {
+        if (!validateAccess()) return;
 
-      if (!userData.fullname || !userData.nim || !userData.angkatan) {
-          alert('Mohon isi semua data diri.');
-          return;
-      }
+        userData.fullname = document.getElementById('fullname').value;
+        userData.nim = document.getElementById('nim').value;
+        userData.angkatan = document.getElementById('angkatan').value;
 
-      if (!checkDuplicateAccess(userData.fullname, userData.nim, userData.angkatan)) return;
+        if (!userData.fullname || !userData.nim || !userData.angkatan) {
+            alert('Mohon isi semua data diri.');
+            return;
+        }
 
-      isQuizActive = true;
-      enterFullscreen(document.documentElement);
-      document.addEventListener('fullscreenchange', handleFullscreenChange);
-      document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-      document.addEventListener('mozfullscreenchange', handleFullscreenChange);
-      document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+        if (!checkDuplicateAccess(userData.fullname, userData.nim, userData.angkatan)) return;
 
-      document.getElementById('registration-form').classList.add('hidden');
-      document.getElementById('clear-access-btn').classList.add('hidden');
-      document.getElementById('quiz-container').classList.remove('hidden');
+        isQuizActive = true;
+        enterFullscreen(document.documentElement);
+        document.addEventListener('fullscreenchange', handleFullscreenChange);
+        document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+        document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+        document.addEventListener('MSFullscreenChange', handleFullscreenChange);
 
-      shuffleArray(questions);
-      questions.forEach(q => shuffleArray(q.choices));
+        document.getElementById('registration-form').classList.add('hidden');
+        document.getElementById('clear-access-btn').classList.add('hidden');
+        document.getElementById('quiz-container').classList.remove('hidden');
 
-      showQuestion();
-  }
+        shuffleArray(questions);
+        questions.forEach(q => shuffleArray(q.choices));
 
-  function showQuestion() {
-      if (currentQuestion >= questions.length) {
-          endQuiz();
-          return;
-      }
+        showQuestion();
+    }
 
-      const question = questions[currentQuestion];
-      document.getElementById('question').textContent = question.question;
-      document.getElementById('current-question').textContent = currentQuestion + 1;
-      document.getElementById('total-questions').textContent = questions.length;
+    function showQuestion() {
+        if (currentQuestion >= questions.length) {
+            endQuiz();
+            return;
+        }
 
-      const optionsContainer = document.getElementById('options');
-      optionsContainer.innerHTML = '';
-      question.choices.forEach((choice, index) => {
-          const option = document.createElement('div');
-          option.classList.add('option');
-          option.textContent = choice;
-          option.onclick = () => selectOption(index);
-          optionsContainer.appendChild(option);
-      });
+        const question = questions[currentQuestion];
+        document.getElementById('question').textContent = question.question;
+        document.getElementById('current-question').textContent = currentQuestion + 1;
+        document.getElementById('total-questions').textContent = questions.length;
 
-      document.getElementById('progress').style.width = `${(currentQuestion + 1) / questions.length * 100}%`;
+        const optionsContainer = document.getElementById('options');
+        optionsContainer.innerHTML = '';
+        question.choices.forEach((choice, index) => {
+            const option = document.createElement('div');
+            option.classList.add('option');
+            option.textContent = choice;
+            option.onclick = () => selectOption(index);
+            optionsContainer.appendChild(option);
+        });
 
-      startTimer();
-  }
+        document.getElementById('progress').style.width = `${(currentQuestion + 1) / questions.length * 100}%`;
 
-  function selectOption(index) {
-      const options = document.querySelectorAll('.option');
-      options.forEach(option => option.classList.remove('selected'));
-      options[index].classList.add('selected');
-  }
+        startTimer();
+    }
 
-  function submitAnswer() {
-      const selectedOption = document.querySelector('.option.selected');
-      if (selectedOption) {
-          const answer = selectedOption.textContent;
-          if (answer === questions[currentQuestion].answer) {
-              score += 5;
-          }
-      }
+    function selectOption(index) {
+        const options = document.querySelectorAll('.option');
+        options.forEach(option => option.classList.remove('selected'));
+        options[index].classList.add('selected');
+    }
 
-      currentQuestion++;
-      clearInterval(timer);
-      showQuestion();
-  }
+    function submitAnswer() {
+        const selectedOption = document.querySelector('.option.selected');
+        if (selectedOption) {
+            const answer = selectedOption.textContent;
+            if (answer === questions[currentQuestion].answer) {
+                score += 5;
+            }
+        }
 
-  function startTimer() {
-      let timeLeft = 30;
-      document.getElementById('timer').textContent = `Waktu: ${timeLeft}`;
+        currentQuestion++;
+        clearInterval(timer);
+        showQuestion();
+    }
 
-      timer = setInterval(() => {
-          timeLeft--;
-          document.getElementById('timer').textContent = `Waktu: ${timeLeft}`;
+    function startTimer() {
+        let timeLeft = 30;
+        document.getElementById('timer').textContent = `Waktu: ${timeLeft}`;
 
-          if (timeLeft <= 0) {
-              clearInterval(timer);
-              submitAnswer();
-          }
-      }, 1000);
-  }
+        timer = setInterval(() => {
+            timeLeft--;
+            document.getElementById('timer').textContent = `Waktu: ${timeLeft}`;
 
-  function endQuiz() {
-      isQuizActive = false;
-      document.getElementById('quiz-container').classList.add('hidden');
-      document.getElementById('result-container').classList.remove('hidden');
-      document.getElementById('score').textContent = score;
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                submitAnswer();
+            }
+        }, 1000);
+    }
 
-      let resultMessage = '';
-      if (score >= 65) {
-          resultMessage = 'Selamat! Anda Bisa Mengikuti Praktikum.';
-      } else {
-          resultMessage = 'ANDA TIDAK BERHAK MENGIKUTI PRAKTIKUM HARI INI.';
-      }
-      document.getElementById('result-message').textContent = resultMessage;
+    function endQuiz() {
+        isQuizActive = false;
+        document.getElementById('quiz-container').classList.add('hidden');
+        document.getElementById('result-container').classList.remove('hidden');
+        document.getElementById('score').textContent = score;
 
-      sendResultToGoogleSheet(userData.fullname, userData.nim, score);
+        let resultMessage = '';
+        if (score >= 65) {
+            resultMessage = 'Selamat! Anda Bisa Mengikuti Praktikum.';
+        } else {
+            resultMessage = 'ANDA TIDAK BERHAK MENGIKUTI PRAKTIKUM HARI INI.';
+        }
+        document.getElementById('result-message').textContent = resultMessage;
 
-      document.removeEventListener('fullscreenchange', handleFullscreenChange);
-      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
-      document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
-      document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
-  }
+        sendResultToGoogleSheet(userData.fullname, userData.nim, score);
 
-  function sendResultToGoogleSheet(fullName, nim, score) {
-      const webAppUrl = 'https://script.google.com/macros/s/AKfycbxWtm1SKkZ9oDhvvJ9qsuDU2MslV6OGwnFYT-SoB-jVx8TUMtcFL7uORzluODKKkcL0/exec';
-      const now = new Date();
-      const date = now.toLocaleDateString('id-ID');
-      const time = now.toLocaleTimeString('id-ID');
+        document.removeEventListener('fullscreenchange', handleFullscreenChange);
+        document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+        document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
+        document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
+    }
 
-      const data = {
-          fullName: fullName,
-          nim: nim,
-          score: score,
-          quizTitle: `${quizId} Praktikum PSI`,
-          date: date,
-          time: time
-      };
+    function sendResultToGoogleSheet(fullName, nim, score) {
+        const webAppUrl = 'https://script.google.com/macros/s/AKfycbxWtm1SKkZ9oDhvvJ9qsuDU2MslV6OGwnFYT-SoB-jVx8TUMtcFL7uORzluODKKkcL0/exec';
+        const now = new Date();
+        const date = now.toLocaleDateString('id-ID');
+        const time = now.toLocaleTimeString('id-ID');
 
-      fetch(webAppUrl, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-              'Content-Type': 'text/plain',
-          },
-          body: JSON.stringify(data)
-      })
-      .then(response => {
-          console.log('Data berhasil dikirim ke Google Sheet');
-          console.log('Data yang dikirim:', JSON.stringify(data));
-      })
-      .catch(error => {
-          console.error('Error:', error);
-          alert('Terjadi kesalahan saat mengirim data. Silakan coba lagi.');
-      });
-  }
+        const data = {
+            fullName: fullName,
+            nim: nim,
+            score: score,
+            quizTitle: `${quizId} Praktikum PSI`,
+            date: date,
+            time: time
+        };
 
-  function clearAllAccess() {
-      Object.keys(localStorage).forEach(key => {
-          if (key.startsWith(quizId)) {
-              localStorage.removeItem(key);
-          }
-      });
-      alert('Semua data akses untuk kuis ini telah dihapus.');
-  }
+        fetch(webAppUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                console.log('Data berhasil dikirim ke Google Sheet');
+                console.log('Data yang dikirim:', JSON.stringify(data));
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat mengirim data. Silakan coba lagi.');
+            });
+    }
+
+    function clearAllAccess() {
+        Object.keys(localStorage).forEach(key => {
+            if (key.startsWith(quizId)) {
+                localStorage.removeItem(key);
+            }
+        });
+        alert('Semua data akses untuk kuis ini telah dihapus.');
+    }
 
   // Event listeners
   document.addEventListener('DOMContentLoaded', function() {
       const quizInfoElement = document.getElementById('quiz-info');
       if (quizInfoElement) {
-          quizInfoElement.textContent = `${quizId}. Selamat Bekerja Semoga Sukses.`;
+          quizInfoElement.textContent = `${quizId}. Kuis ini dapat diambil secara independen dari kuis lainnya.`;
       }
 
-      const clearAccessBtn = document.getElementById('clear-access-btn');
-      clearAccessBtn.addEventListener('click', clearAllAccess);
-      clearAccessBtn.classList.remove('hidden');
+        const clearAccessBtn = document.getElementById('clear-access-btn');
+        clearAccessBtn.addEventListener('click', clearAllAccess);
+        clearAccessBtn.classList.remove('hidden');
 
-      document.getElementById('start-btn').addEventListener('click', startQuiz);
-      document.getElementById('submit-btn').addEventListener('click', submitAnswer);
-      document.getElementById('exit-fullscreen').addEventListener('click', function() {
-          isQuizActive = false;
-          exitFullscreen();
-      });
-  });
+        document.getElementById('start-btn').addEventListener('click', startQuiz);
+        document.getElementById('submit-btn').addEventListener('click', submitAnswer);
+        document.getElementById('exit-fullscreen').addEventListener('click', function () {
+            isQuizActive = false;
+            exitFullscreen();
+        });
+    });
 
-  // Prevent shortcuts and right-click
-  window.blockShortcuts = function(e) {
-      if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
-          e.preventDefault();
-          return false;
-      }
-  };
+    // Prevent shortcuts and right-click
+    window.blockShortcuts = function (e) {
+        if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
+            e.preventDefault();
+            return false;
+        }
+    };
 
-  document.oncontextmenu = function(e) {
-      e.preventDefault();
-      return false;
-  };
+    document.oncontextmenu = function (e) {
+        e.preventDefault();
+        return false;
+    };
 
-  // Prevent back function
-  history.pushState(null, null, location.href);
-  window.onpopstate = function () {
-      history.go(1);
-  };
+    // Prevent back function
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
 
     // Quiz questions
     questions = [
-      {
-          "question": "Apa saja jenis-jenis relationship dalam basis data yang dipelajari pada pertemuan keenam?",
-          "choices": [
-              "One-to-one, one-to-many, many-to-many",
-              "One-to-one, one-to-two, two-to-many",
-              "One-to-many, many-to-one, many-to-none",
-              "One-to-all, all-to-many, many-to-few",
-              "One-to-one, many-to-one, few-to-many"
-          ],
-          "answer": "One-to-one, one-to-many, many-to-many"
-      },
-      {
-          "question": "Mengapa penting untuk membangun relationship yang tepat dalam basis data?",
-          "choices": [
-              "Untuk mempercepat proses penginputan data",
-              "Untuk menjaga integritas data",
-              "Untuk menghemat ruang penyimpanan",
-              "Untuk meningkatkan keamanan database",
-              "Untuk membuat tampilan lebih menarik"
-          ],
-          "answer": "Untuk menjaga integritas data"
-      },
-      {
-          "question": "Apa fungsi primary key dalam membentuk relationship?",
-          "choices": [
-              "Sebagai identitas unik untuk setiap baris dalam tabel",
-              "Sebagai kolom yang selalu bernilai kosong",
-              "Sebagai penghubung antar database",
-              "Sebagai penanda kolom yang akan dihapus",
-              "Sebagai pengatur urutan data dalam tabel"
-          ],
-          "answer": "Sebagai identitas unik untuk setiap baris dalam tabel"
-      },
-      {
-          "question": "Apa yang dimaksud dengan foreign key?",
-          "choices": [
-              "Kunci yang digunakan untuk mengenkripsi data",
-              "Kunci utama dalam tabel utama",
-              "Kunci yang menghubungkan tabel dengan tabel lain",
-              "Kunci yang hanya ada dalam tabel sementara",
-              "Kunci yang digunakan untuk menghapus data"
-          ],
-          "answer": "Kunci yang menghubungkan tabel dengan tabel lain"
-      },
-      {
-          "question": "Dalam Microsoft Access, bagaimana cara memastikan referential integrity?",
-          "choices": [
-              "Dengan mengunci semua tabel",
-              "Dengan menonaktifkan fitur keamanan",
-              "Dengan mengaktifkan opsi referential integrity saat mengatur relationship",
-              "Dengan menghapus data duplikat",
-              "Dengan menambahkan lebih banyak primary key"
-          ],
-          "answer": "Dengan mengaktifkan opsi referential integrity saat mengatur relationship"
-      },
-      {
-          "question": "Apa manfaat dari menghubungkan tabel-tabel dalam basis data?",
-          "choices": [
-              "Untuk membuat tabel menjadi lebih besar",
-              "Untuk memungkinkan data dari satu tabel digunakan di tabel lain secara terstruktur dan logis",
-              "Untuk mengurangi jumlah tabel dalam database",
-              "Untuk meningkatkan kecepatan akses database",
-              "Untuk menghapus data yang tidak diperlukan"
-          ],
-          "answer": "Untuk memungkinkan data dari satu tabel digunakan di tabel lain secara terstruktur dan logis"
-      },
-      {
-          "question": "Pada sesi 'Membuat Tautan Tabel Bagian 1', langkah pertama yang dilakukan adalah:",
-          "choices": [
-              "Menghapus semua tabel",
-              "Mengidentifikasi kolom yang akan dihubungkan",
-              "Membuat query baru",
-              "Menentukan jenis data",
-              "Mengganti nama tabel"
-          ],
-          "answer": "Mengidentifikasi kolom yang akan dihubungkan"
-      },
-      {
-          "question": "Apa tujuan dari pendekatan bertahap dalam pembuatan tautan tabel?",
-          "choices": [
-              "Agar mahasiswa dapat menyelesaikan tugas lebih cepat",
-              "Untuk memastikan mahasiswa memahami proses pembuatan tautan dengan baik",
-              "Untuk menghemat sumber daya komputer",
-              "Untuk mengurangi ukuran database",
-              "Untuk meningkatkan keamanan data"
-          ],
-          "answer": "Untuk memastikan mahasiswa memahami proses pembuatan tautan dengan baik"
-      },
-      {
-          "question": "Dalam proses pengaturan relationship, apa yang dimaksud dengan referential integrity?",
-          "choices": [
-              "Konsistensi data antara tabel yang terhubung",
-              "Kecepatan akses data antar tabel",
-              "Ukuran tabel dalam database",
-              "Jumlah kolom dalam sebuah tabel",
-              "Nama tabel yang digunakan"
-          ],
-          "answer": "Konsistensi data antara tabel yang terhubung"
-      },
-      {
-          "question": "Jika ingin mengedit relationship yang sudah ada, langkah yang perlu dilakukan adalah:",
-          "choices": [
-              "Menghapus database dan membuat yang baru",
-              "Memodifikasi atau menghapus relationship melalui menu relationship",
-              "Mengubah nama tabel terkait",
-              "Menambahkan lebih banyak kolom ke tabel",
-              "Mengubah tipe data kolom menjadi teks"
-          ],
-          "answer": "Memodifikasi atau menghapus relationship melalui menu relationship"
-      },
-      {
-          "question": "Apa yang terjadi jika referential integrity tidak dijaga dengan baik?",
-          "choices": [
-              "Data akan tetap konsisten dan akurat",
-              "Data mungkin menjadi tidak konsisten atau terjadi kesalahan",
-              "Database akan berjalan lebih cepat",
-              "Tidak ada efek sama sekali",
-              "Database akan otomatis memperbaiki kesalahan"
-          ],
-          "answer": "Data mungkin menjadi tidak konsisten atau terjadi kesalahan"
-      },
-      {
-          "question": "Jenis relationship yang memungkinkan satu baris dalam tabel A terkait dengan banyak baris dalam tabel B adalah:",
-          "choices": [
-              "One-to-one",
-              "One-to-many",
-              "Many-to-one",
-              "Many-to-many",
-              "One-to-all"
-          ],
-          "answer": "One-to-many"
-      },
-      {
-          "question": "Dalam konteks Microsoft Access, primary key biasanya:",
-          "choices": [
-              "Kolom dengan nilai duplikat",
-              "Kolom yang selalu bernilai null",
-              "Kolom dengan nilai unik yang mengidentifikasi setiap baris",
-              "Kolom yang tidak digunakan dalam relationship",
-              "Kolom yang berisi data teks panjang"
-          ],
-          "answer": "Kolom dengan nilai unik yang mengidentifikasi setiap baris"
-      },
-      {
-          "question": "Pada sesi 'Membuat Tautan Tabel Bagian 2', mahasiswa ditugaskan untuk:",
-          "choices": [
-              "Menghapus relationship yang ada",
-              "Menambahkan hubungan tambahan antara tabel-tabel yang tersisa",
-              "Mengganti nama semua tabel",
-              "Membuat query untuk laporan",
-              "Mengimpor data dari sumber lain"
-          ],
-          "answer": "Menambahkan hubungan tambahan antara tabel-tabel yang tersisa"
-      },
-      {
-          "question": "Bagaimana cara menghubungkan tabel yang sebelumnya tidak terkait?",
-          "choices": [
-              "Dengan menambahkan foreign key yang sesuai",
-              "Dengan menghapus primary key",
-              "Dengan mengubah nama database",
-              "Dengan menghapus semua data",
-              "Dengan menginstal ulang Microsoft Access"
-          ],
-          "answer": "Dengan menambahkan foreign key yang sesuai"
-      },
-      {
-          "question": "Apa yang dimaksud dengan one-to-one relationship?",
-          "choices": [
-              "Satu baris dalam tabel A terkait dengan banyak baris dalam tabel B",
-              "Satu baris dalam tabel A terkait dengan satu baris dalam tabel B",
-              "Banyak baris dalam tabel A terkait dengan banyak baris dalam tabel B",
-              "Tidak ada hubungan antara tabel",
-              "Semua baris dalam tabel A terkait dengan semua baris dalam tabel B"
-          ],
-          "answer": "Satu baris dalam tabel A terkait dengan satu baris dalam tabel B"
-      },
-      {
-          "question": "Salah satu tujuan dari sesi 'Mengedit dan Menghubungkan Tabel' adalah:",
-          "choices": [
-              "Mengajarkan cara memodifikasi atau menghapus relationship jika diperlukan",
-              "Menghapus semua data dalam database",
-              "Mengganti tampilan antarmuka Microsoft Access",
-              "Mengubah bahasa pemrograman yang digunakan",
-              "Menambahkan efek animasi pada tabel"
-          ],
-          "answer": "Mengajarkan cara memodifikasi atau menghapus relationship jika diperlukan"
-      },
-      {
-          "question": "Apa yang harus diperhatikan saat membuat relationship untuk memastikan data tetap konsisten?",
-          "choices": [
-              "Ukuran font dalam tabel",
-              "Tipe data dari kolom yang dihubungkan harus kompatibel",
-              "Warna latar belakang tabel",
-              "Jumlah baris dalam setiap tabel",
-              "Nama pengguna yang login"
-          ],
-          "answer": "Tipe data dari kolom yang dihubungkan harus kompatibel"
-      },
-      {
-          "question": "Many-to-many relationship biasanya diimplementasikan dengan:",
-          "choices": [
-              "Menggunakan tabel ketiga sebagai tabel penghubung",
-              "Menggabungkan semua tabel menjadi satu",
-              "Menggunakan query khusus",
-              "Menghapus primary key",
-              "Menggunakan fitur canggih Microsoft Access"
-          ],
-          "answer": "Menggunakan tabel ketiga sebagai tabel penghubung"
-      },
-      {
-          "question": "Apa manfaat dari memastikan referential integrity dalam database?",
-          "choices": [
-              "Memungkinkan perubahan data tanpa batas",
-              "Mencegah perubahan yang dapat menyebabkan inkonsistensi data",
-              "Memperbesar ukuran database secara signifikan",
-              "Mengizinkan data duplikat dalam primary key",
-              "Mengurangi keamanan data"
-          ],
-          "answer": "Mencegah perubahan yang dapat menyebabkan inkonsistensi data"
-      }
-  ];
+  {
+    "question": "Apa format file yang umumnya digunakan saat mengimpor data berbasis teks ke Microsoft Access?",
+    "choices": [
+      "DOC",
+      "PDF",
+      "CSV",
+      "JPG",
+      "EXE"
+    ],
+    "answer": "CSV"
+  },
+  {
+    "question": "Dalam proses impor data dari Excel ke Access, apa yang dimaksud dengan 'penanganan baris judul'?",
+    "choices": [
+      "Menghapus baris judul",
+      "Menjadikan baris pertama sebagai nama kolom",
+      "Membuat baris judul baru",
+      "Mengenkripsi baris judul",
+      "Menggandakan baris judul"
+    ],
+    "answer": "Menjadikan baris pertama sebagai nama kolom"
+  },
+  {
+    "question": "Apa fungsi utama dari 'wizard import teks' di Microsoft Access?",
+    "choices": [
+      "Untuk membuat tabel baru",
+      "Untuk mengedit teks dalam tabel",
+      "Untuk menganalisis dan mengimpor data dari file teks",
+      "Untuk mengekspor data ke file teks",
+      "Untuk menghapus teks dari tabel"
+    ],
+    "answer": "Untuk menganalisis dan mengimpor data dari file teks"
+  },
+  {
+    "question": "Apa yang dimaksud dengan 'delimiter' dalam konteks impor file teks?",
+    "choices": [
+      "Karakter pembatas antar kolom data",
+      "Batas maksimum jumlah baris",
+      "Tanda akhir file",
+      "Format encoding file",
+      "Jenis font yang digunakan"
+    ],
+    "answer": "Karakter pembatas antar kolom data"
+  },
+  {
+    "question": "Bagaimana cara terbaik mengatasi masalah ketidakcocokan tipe data saat mengimpor dari Excel ke Access?",
+    "choices": [
+      "Mengabaikan data yang tidak cocok",
+      "Menghapus kolom yang bermasalah",
+      "Menyesuaikan tipe data di Access sebelum impor",
+      "Mengubah semua data menjadi teks",
+      "Membatalkan proses impor"
+    ],
+    "answer": "Menyesuaikan tipe data di Access sebelum impor"
+  },
+  {
+    "question": "Apa yang harus dilakukan jika ada nilai yang hilang saat mengimpor data?",
+    "choices": [
+      "Membatalkan impor",
+      "Mengisi nilai yang hilang dengan nol",
+      "Mengabaikan baris dengan nilai yang hilang",
+      "Mengevaluasi dan memutuskan penanganan berdasarkan konteks data",
+      "Menghapus kolom dengan nilai yang hilang"
+    ],
+    "answer": "Mengevaluasi dan memutuskan penanganan berdasarkan konteks data"
+  },
+  {
+    "question": "Apa keuntungan menggunakan file CSV untuk impor data ke Access?",
+    "choices": [
+      "Ukuran file yang lebih kecil",
+      "Kemampuan menyimpan format sel",
+      "Dukungan untuk rumus kompleks",
+      "Kompatibilitas yang tinggi dengan berbagai aplikasi",
+      "Kemampuan menyimpan gambar"
+    ],
+    "answer": "Kompatibilitas yang tinggi dengan berbagai aplikasi"
+  },
+  {
+    "question": "Bagaimana cara terbaik untuk mempersiapkan file teks sebelum diimpor ke Access?",
+    "choices": [
+      "Mengenkripsi file",
+      "Mengompres file",
+      "Membersihkan data dan memastikan konsistensi format",
+      "Mengubah semua data menjadi huruf kapital",
+      "Menghapus semua spasi dalam file"
+    ],
+    "answer": "Membersihkan data dan memastikan konsistensi format"
+  },
+  {
+    "question": "Apa yang dimaksud dengan 'pemetaan tipe data' dalam proses impor?",
+    "choices": [
+      "Membuat peta visual dari data",
+      "Mencocokkan tipe data sumber dengan tipe data di Access",
+      "Mengubah semua data menjadi satu tipe",
+      "Membuat indeks untuk setiap tipe data",
+      "Menghitung jumlah tipe data berbeda"
+    ],
+    "answer": "Mencocokkan tipe data sumber dengan tipe data di Access"
+  },
+  {
+    "question": "Bagaimana cara mengurutkan data dalam tampilan lembar data Access?",
+    "choices": [
+      "Menggunakan fungsi SORT() dalam query",
+      "Menekan tombol F4",
+      "Klik kanan pada kolom dan pilih opsi pengurutan",
+      "Data selalu terurut otomatis",
+      "Mengimpor ulang data dalam urutan yang diinginkan"
+    ],
+    "answer": "Klik kanan pada kolom dan pilih opsi pengurutan"
+  },
+  {
+    "question": "Apa fungsi dari filter dalam tampilan lembar data?",
+    "choices": [
+      "Untuk menghapus data yang tidak diinginkan",
+      "Untuk mengubah warna tampilan data",
+      "Untuk menampilkan hanya data yang memenuhi kriteria tertentu",
+      "Untuk menggabungkan beberapa tabel",
+      "Untuk membuat backup data"
+    ],
+    "answer": "Untuk menampilkan hanya data yang memenuhi kriteria tertentu"
+  },
+  {
+    "question": "Bagaimana cara terbaik untuk memodifikasi data yang sudah ada dalam lembar data?",
+    "choices": [
+      "Menghapus dan memasukkan ulang seluruh baris",
+      "Mengklik sel yang ingin diubah dan mengetik nilai baru",
+      "Mengimpor ulang seluruh dataset",
+      "Membuat tabel baru untuk setiap perubahan",
+      "Menggunakan query untuk mengubah data"
+    ],
+    "answer": "Mengklik sel yang ingin diubah dan mengetik nilai baru"
+  },
+  {
+    "question": "Apa yang dimaksud dengan 'range sel' dalam konteks impor dari Excel?",
+    "choices": [
+      "Jarak antar sel dalam spreadsheet",
+      "Rentang nilai yang diperbolehkan dalam sel",
+      "Area sel yang akan diimpor ke Access",
+      "Jumlah maksimum sel yang dapat diimpor",
+      "Ukuran font dalam sel Excel"
+    ],
+    "answer": "Area sel yang akan diimpor ke Access"
+  },
+  {
+    "question": "Bagaimana cara menambahkan catatan baru dalam tampilan lembar data Access?",
+    "choices": [
+      "Menggunakan tombol Insert pada keyboard",
+      "Memilih 'New Record' dari menu File",
+      "Mengklik baris kosong di bagian bawah lembar data",
+      "Membuat tabel baru untuk setiap catatan",
+      "Mengimpor data baru dari file eksternal"
+    ],
+    "answer": "Mengklik baris kosong di bagian bawah lembar data"
+  },
+  {
+    "question": "Apa yang harus dilakukan jika tanda kutip dalam file teks menyebabkan masalah saat impor?",
+    "choices": [
+      "Menghapus semua tanda kutip",
+      "Menggunakan opsi 'Text Qualifier' dalam wizard impor",
+      "Mengubah format file menjadi Excel",
+      "Membatalkan impor",
+      "Mengganti tanda kutip dengan karakter lain"
+    ],
+    "answer": "Menggunakan opsi 'Text Qualifier' dalam wizard impor"
+  },
+  {
+    "question": "Bagaimana cara terbaik untuk memastikan integritas data setelah proses impor?",
+    "choices": [
+      "Menghapus data yang mencurigakan",
+      "Melakukan validasi manual pada setiap baris",
+      "Menggunakan alat validasi bawaan Access dan memeriksa sampel data",
+      "Mengabaikan proses validasi",
+      "Mengimpor ulang data beberapa kali"
+    ],
+    "answer": "Menggunakan alat validasi bawaan Access dan memeriksa sampel data"
+  },
+  {
+    "question": "Apa fungsi dari pengaturan format tampilan dalam lembar data?",
+    "choices": [
+      "Hanya untuk estetika",
+      "Untuk mengenkripsi data",
+      "Untuk meningkatkan kecepatan database",
+      "Untuk mempermudah pembacaan dan interpretasi data",
+      "Untuk mengurangi ukuran file database"
+    ],
+    "answer": "Untuk mempermudah pembacaan dan interpretasi data"
+  },
+  {
+    "question": "Bagaimana cara menghapus catatan dalam tampilan lembar data Access?",
+    "choices": [
+      "Menekan tombol Delete pada keyboard",
+      "Mengosongkan semua sel dalam baris",
+      "Mengklik kanan pada nomor baris dan memilih 'Delete Record'",
+      "Menghapus tabel dan membuatnya kembali",
+      "Menggunakan query DELETE"
+    ],
+    "answer": "Mengklik kanan pada nomor baris dan memilih 'Delete Record'"
+  },
+  {
+    "question": "Apa yang dimaksud dengan 'pengaturan format kolom' dalam impor file teks?",
+    "choices": [
+      "Mengubah warna latar belakang kolom",
+      "Menentukan tipe data dan cara interpretasi data untuk setiap kolom",
+      "Menghitung lebar optimal untuk setiap kolom",
+      "Menambahkan border pada setiap kolom",
+      "Mengganti nama kolom secara otomatis"
+    ],
+    "answer": "Menentukan tipe data dan cara interpretasi data untuk setiap kolom"
+  },
+  {
+    "question": "Apa keuntungan menggunakan fungsi otomatis dalam Microsoft Access untuk memasukkan data?",
+    "choices": [
+      "Mengurangi ukuran file database",
+      "Meningkatkan keamanan data",
+      "Mempercepat proses input dan mengurangi kesalahan",
+      "Mengenkripsi data secara otomatis",
+      "Membuat backup otomatis setiap kali data dimasukkan"
+    ],
+    "answer": "Mempercepat proses input dan mengurangi kesalahan"
+  }
+];
 })();

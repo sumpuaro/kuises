@@ -1,17 +1,17 @@
-(function(){
-  const quizId = "Kuis 04"; // Ubah ini untuk setiap kuis yang berbeda
-  let currentQuestion = 0;
-  let score = 0;
-  let timer;
-  let questions = [];
-  let userData = {};
-  let isQuizActive = false;
+(function () {
+    const quizId = "Kuis 04"; // Ubah ini untuk setiap kuis yang berbeda
+    let currentQuestion = 0;
+    let score = 0;
+    let timer;
+    let questions = [];
+    let userData = {};
+    let isQuizActive = false;
 
-  // Validasi waktu akses
-  function validateAccess() {
-    const now = new Date();
-    const startTime = new Date('2024-09-10T10:00:00');
-    const endTime = new Date('2024-09-10T10:30:00');
+    // Validasi waktu akses
+    function validateAccess() {
+        const now = new Date();
+        const startTime = new Date('2024-09-17T10:00:00');
+        const endTime = new Date('2024-09-17T10:30:00');
 
         if (now < startTime || now > endTime) {
             alert(`Akses kuis hanya tersedia pada ${startTime.toLocaleDateString()} pukul ${startTime.toLocaleTimeString()} - ${endTime.toLocaleTimeString()}.`);
@@ -245,12 +245,12 @@
         alert('Semua data akses untuk kuis ini telah dihapus.');
     }
 
-  // Event listeners
-  document.addEventListener('DOMContentLoaded', function() {
-      const quizInfoElement = document.getElementById('quiz-info');
-      if (quizInfoElement) {
-          quizInfoElement.textContent = `${quizId}. Kuis ini dapat diambil secara independen dari kuis lainnya.`;
-      }
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', function () {
+        const quizInfoElement = document.getElementById('quiz-info');
+        if (quizInfoElement) {
+            quizInfoElement.textContent = `${quizId}. Selamat Bekerja Semoga Sukses.`;
+        }
 
         const clearAccessBtn = document.getElementById('clear-access-btn');
         clearAccessBtn.addEventListener('click', clearAllAccess);
@@ -285,225 +285,225 @@
 
     // Quiz questions
     questions = [
-  {
-    "question": "Apa format file yang umumnya digunakan saat mengimpor data berbasis teks ke Microsoft Access?",
-    "choices": [
-      "DOC",
-      "PDF",
-      "CSV",
-      "JPG",
-      "EXE"
-    ],
-    "answer": "CSV"
-  },
-  {
-    "question": "Dalam proses impor data dari Excel ke Access, apa yang dimaksud dengan 'penanganan baris judul'?",
-    "choices": [
-      "Menghapus baris judul",
-      "Menjadikan baris pertama sebagai nama kolom",
-      "Membuat baris judul baru",
-      "Mengenkripsi baris judul",
-      "Menggandakan baris judul"
-    ],
-    "answer": "Menjadikan baris pertama sebagai nama kolom"
-  },
-  {
-    "question": "Apa fungsi utama dari 'wizard import teks' di Microsoft Access?",
-    "choices": [
-      "Untuk membuat tabel baru",
-      "Untuk mengedit teks dalam tabel",
-      "Untuk menganalisis dan mengimpor data dari file teks",
-      "Untuk mengekspor data ke file teks",
-      "Untuk menghapus teks dari tabel"
-    ],
-    "answer": "Untuk menganalisis dan mengimpor data dari file teks"
-  },
-  {
-    "question": "Apa yang dimaksud dengan 'delimiter' dalam konteks impor file teks?",
-    "choices": [
-      "Karakter pembatas antar kolom data",
-      "Batas maksimum jumlah baris",
-      "Tanda akhir file",
-      "Format encoding file",
-      "Jenis font yang digunakan"
-    ],
-    "answer": "Karakter pembatas antar kolom data"
-  },
-  {
-    "question": "Bagaimana cara terbaik mengatasi masalah ketidakcocokan tipe data saat mengimpor dari Excel ke Access?",
-    "choices": [
-      "Mengabaikan data yang tidak cocok",
-      "Menghapus kolom yang bermasalah",
-      "Menyesuaikan tipe data di Access sebelum impor",
-      "Mengubah semua data menjadi teks",
-      "Membatalkan proses impor"
-    ],
-    "answer": "Menyesuaikan tipe data di Access sebelum impor"
-  },
-  {
-    "question": "Apa yang harus dilakukan jika ada nilai yang hilang saat mengimpor data?",
-    "choices": [
-      "Membatalkan impor",
-      "Mengisi nilai yang hilang dengan nol",
-      "Mengabaikan baris dengan nilai yang hilang",
-      "Mengevaluasi dan memutuskan penanganan berdasarkan konteks data",
-      "Menghapus kolom dengan nilai yang hilang"
-    ],
-    "answer": "Mengevaluasi dan memutuskan penanganan berdasarkan konteks data"
-  },
-  {
-    "question": "Apa keuntungan menggunakan file CSV untuk impor data ke Access?",
-    "choices": [
-      "Ukuran file yang lebih kecil",
-      "Kemampuan menyimpan format sel",
-      "Dukungan untuk rumus kompleks",
-      "Kompatibilitas yang tinggi dengan berbagai aplikasi",
-      "Kemampuan menyimpan gambar"
-    ],
-    "answer": "Kompatibilitas yang tinggi dengan berbagai aplikasi"
-  },
-  {
-    "question": "Bagaimana cara terbaik untuk mempersiapkan file teks sebelum diimpor ke Access?",
-    "choices": [
-      "Mengenkripsi file",
-      "Mengompres file",
-      "Membersihkan data dan memastikan konsistensi format",
-      "Mengubah semua data menjadi huruf kapital",
-      "Menghapus semua spasi dalam file"
-    ],
-    "answer": "Membersihkan data dan memastikan konsistensi format"
-  },
-  {
-    "question": "Apa yang dimaksud dengan 'pemetaan tipe data' dalam proses impor?",
-    "choices": [
-      "Membuat peta visual dari data",
-      "Mencocokkan tipe data sumber dengan tipe data di Access",
-      "Mengubah semua data menjadi satu tipe",
-      "Membuat indeks untuk setiap tipe data",
-      "Menghitung jumlah tipe data berbeda"
-    ],
-    "answer": "Mencocokkan tipe data sumber dengan tipe data di Access"
-  },
-  {
-    "question": "Bagaimana cara mengurutkan data dalam tampilan lembar data Access?",
-    "choices": [
-      "Menggunakan fungsi SORT() dalam query",
-      "Menekan tombol F4",
-      "Klik kanan pada kolom dan pilih opsi pengurutan",
-      "Data selalu terurut otomatis",
-      "Mengimpor ulang data dalam urutan yang diinginkan"
-    ],
-    "answer": "Klik kanan pada kolom dan pilih opsi pengurutan"
-  },
-  {
-    "question": "Apa fungsi dari filter dalam tampilan lembar data?",
-    "choices": [
-      "Untuk menghapus data yang tidak diinginkan",
-      "Untuk mengubah warna tampilan data",
-      "Untuk menampilkan hanya data yang memenuhi kriteria tertentu",
-      "Untuk menggabungkan beberapa tabel",
-      "Untuk membuat backup data"
-    ],
-    "answer": "Untuk menampilkan hanya data yang memenuhi kriteria tertentu"
-  },
-  {
-    "question": "Bagaimana cara terbaik untuk memodifikasi data yang sudah ada dalam lembar data?",
-    "choices": [
-      "Menghapus dan memasukkan ulang seluruh baris",
-      "Mengklik sel yang ingin diubah dan mengetik nilai baru",
-      "Mengimpor ulang seluruh dataset",
-      "Membuat tabel baru untuk setiap perubahan",
-      "Menggunakan query untuk mengubah data"
-    ],
-    "answer": "Mengklik sel yang ingin diubah dan mengetik nilai baru"
-  },
-  {
-    "question": "Apa yang dimaksud dengan 'range sel' dalam konteks impor dari Excel?",
-    "choices": [
-      "Jarak antar sel dalam spreadsheet",
-      "Rentang nilai yang diperbolehkan dalam sel",
-      "Area sel yang akan diimpor ke Access",
-      "Jumlah maksimum sel yang dapat diimpor",
-      "Ukuran font dalam sel Excel"
-    ],
-    "answer": "Area sel yang akan diimpor ke Access"
-  },
-  {
-    "question": "Bagaimana cara menambahkan catatan baru dalam tampilan lembar data Access?",
-    "choices": [
-      "Menggunakan tombol Insert pada keyboard",
-      "Memilih 'New Record' dari menu File",
-      "Mengklik baris kosong di bagian bawah lembar data",
-      "Membuat tabel baru untuk setiap catatan",
-      "Mengimpor data baru dari file eksternal"
-    ],
-    "answer": "Mengklik baris kosong di bagian bawah lembar data"
-  },
-  {
-    "question": "Apa yang harus dilakukan jika tanda kutip dalam file teks menyebabkan masalah saat impor?",
-    "choices": [
-      "Menghapus semua tanda kutip",
-      "Menggunakan opsi 'Text Qualifier' dalam wizard impor",
-      "Mengubah format file menjadi Excel",
-      "Membatalkan impor",
-      "Mengganti tanda kutip dengan karakter lain"
-    ],
-    "answer": "Menggunakan opsi 'Text Qualifier' dalam wizard impor"
-  },
-  {
-    "question": "Bagaimana cara terbaik untuk memastikan integritas data setelah proses impor?",
-    "choices": [
-      "Menghapus data yang mencurigakan",
-      "Melakukan validasi manual pada setiap baris",
-      "Menggunakan alat validasi bawaan Access dan memeriksa sampel data",
-      "Mengabaikan proses validasi",
-      "Mengimpor ulang data beberapa kali"
-    ],
-    "answer": "Menggunakan alat validasi bawaan Access dan memeriksa sampel data"
-  },
-  {
-    "question": "Apa fungsi dari pengaturan format tampilan dalam lembar data?",
-    "choices": [
-      "Hanya untuk estetika",
-      "Untuk mengenkripsi data",
-      "Untuk meningkatkan kecepatan database",
-      "Untuk mempermudah pembacaan dan interpretasi data",
-      "Untuk mengurangi ukuran file database"
-    ],
-    "answer": "Untuk mempermudah pembacaan dan interpretasi data"
-  },
-  {
-    "question": "Bagaimana cara menghapus catatan dalam tampilan lembar data Access?",
-    "choices": [
-      "Menekan tombol Delete pada keyboard",
-      "Mengosongkan semua sel dalam baris",
-      "Mengklik kanan pada nomor baris dan memilih 'Delete Record'",
-      "Menghapus tabel dan membuatnya kembali",
-      "Menggunakan query DELETE"
-    ],
-    "answer": "Mengklik kanan pada nomor baris dan memilih 'Delete Record'"
-  },
-  {
-    "question": "Apa yang dimaksud dengan 'pengaturan format kolom' dalam impor file teks?",
-    "choices": [
-      "Mengubah warna latar belakang kolom",
-      "Menentukan tipe data dan cara interpretasi data untuk setiap kolom",
-      "Menghitung lebar optimal untuk setiap kolom",
-      "Menambahkan border pada setiap kolom",
-      "Mengganti nama kolom secara otomatis"
-    ],
-    "answer": "Menentukan tipe data dan cara interpretasi data untuk setiap kolom"
-  },
-  {
-    "question": "Apa keuntungan menggunakan fungsi otomatis dalam Microsoft Access untuk memasukkan data?",
-    "choices": [
-      "Mengurangi ukuran file database",
-      "Meningkatkan keamanan data",
-      "Mempercepat proses input dan mengurangi kesalahan",
-      "Mengenkripsi data secara otomatis",
-      "Membuat backup otomatis setiap kali data dimasukkan"
-    ],
-    "answer": "Mempercepat proses input dan mengurangi kesalahan"
-  }
-];
+        {
+            "question": "Apa saja jenis-jenis relationship dalam basis data yang dipelajari pada pertemuan keenam?",
+            "choices": [
+                "One-to-one, one-to-many, many-to-many",
+                "One-to-one, one-to-two, two-to-many",
+                "One-to-many, many-to-one, many-to-none",
+                "One-to-all, all-to-many, many-to-few",
+                "One-to-one, many-to-one, few-to-many"
+            ],
+            "answer": "One-to-one, one-to-many, many-to-many"
+        },
+        {
+            "question": "Mengapa penting untuk membangun relationship yang tepat dalam basis data?",
+            "choices": [
+                "Untuk mempercepat proses penginputan data",
+                "Untuk menjaga integritas data",
+                "Untuk menghemat ruang penyimpanan",
+                "Untuk meningkatkan keamanan database",
+                "Untuk membuat tampilan lebih menarik"
+            ],
+            "answer": "Untuk menjaga integritas data"
+        },
+        {
+            "question": "Apa fungsi primary key dalam membentuk relationship?",
+            "choices": [
+                "Sebagai identitas unik untuk setiap baris dalam tabel",
+                "Sebagai kolom yang selalu bernilai kosong",
+                "Sebagai penghubung antar database",
+                "Sebagai penanda kolom yang akan dihapus",
+                "Sebagai pengatur urutan data dalam tabel"
+            ],
+            "answer": "Sebagai identitas unik untuk setiap baris dalam tabel"
+        },
+        {
+            "question": "Apa yang dimaksud dengan foreign key?",
+            "choices": [
+                "Kunci yang digunakan untuk mengenkripsi data",
+                "Kunci utama dalam tabel utama",
+                "Kunci yang menghubungkan tabel dengan tabel lain",
+                "Kunci yang hanya ada dalam tabel sementara",
+                "Kunci yang digunakan untuk menghapus data"
+            ],
+            "answer": "Kunci yang menghubungkan tabel dengan tabel lain"
+        },
+        {
+            "question": "Dalam Microsoft Access, bagaimana cara memastikan referential integrity?",
+            "choices": [
+                "Dengan mengunci semua tabel",
+                "Dengan menonaktifkan fitur keamanan",
+                "Dengan mengaktifkan opsi referential integrity saat mengatur relationship",
+                "Dengan menghapus data duplikat",
+                "Dengan menambahkan lebih banyak primary key"
+            ],
+            "answer": "Dengan mengaktifkan opsi referential integrity saat mengatur relationship"
+        },
+        {
+            "question": "Apa manfaat dari menghubungkan tabel-tabel dalam basis data?",
+            "choices": [
+                "Untuk membuat tabel menjadi lebih besar",
+                "Untuk memungkinkan data dari satu tabel digunakan di tabel lain secara terstruktur dan logis",
+                "Untuk mengurangi jumlah tabel dalam database",
+                "Untuk meningkatkan kecepatan akses database",
+                "Untuk menghapus data yang tidak diperlukan"
+            ],
+            "answer": "Untuk memungkinkan data dari satu tabel digunakan di tabel lain secara terstruktur dan logis"
+        },
+        {
+            "question": "Pada sesi 'Membuat Tautan Tabel Bagian 1', langkah pertama yang dilakukan adalah:",
+            "choices": [
+                "Menghapus semua tabel",
+                "Mengidentifikasi kolom yang akan dihubungkan",
+                "Membuat query baru",
+                "Menentukan jenis data",
+                "Mengganti nama tabel"
+            ],
+            "answer": "Mengidentifikasi kolom yang akan dihubungkan"
+        },
+        {
+            "question": "Apa tujuan dari pendekatan bertahap dalam pembuatan tautan tabel?",
+            "choices": [
+                "Agar mahasiswa dapat menyelesaikan tugas lebih cepat",
+                "Untuk memastikan mahasiswa memahami proses pembuatan tautan dengan baik",
+                "Untuk menghemat sumber daya komputer",
+                "Untuk mengurangi ukuran database",
+                "Untuk meningkatkan keamanan data"
+            ],
+            "answer": "Untuk memastikan mahasiswa memahami proses pembuatan tautan dengan baik"
+        },
+        {
+            "question": "Dalam proses pengaturan relationship, apa yang dimaksud dengan referential integrity?",
+            "choices": [
+                "Konsistensi data antara tabel yang terhubung",
+                "Kecepatan akses data antar tabel",
+                "Ukuran tabel dalam database",
+                "Jumlah kolom dalam sebuah tabel",
+                "Nama tabel yang digunakan"
+            ],
+            "answer": "Konsistensi data antara tabel yang terhubung"
+        },
+        {
+            "question": "Jika ingin mengedit relationship yang sudah ada, langkah yang perlu dilakukan adalah:",
+            "choices": [
+                "Menghapus database dan membuat yang baru",
+                "Memodifikasi atau menghapus relationship melalui menu relationship",
+                "Mengubah nama tabel terkait",
+                "Menambahkan lebih banyak kolom ke tabel",
+                "Mengubah tipe data kolom menjadi teks"
+            ],
+            "answer": "Memodifikasi atau menghapus relationship melalui menu relationship"
+        },
+        {
+            "question": "Apa yang terjadi jika referential integrity tidak dijaga dengan baik?",
+            "choices": [
+                "Data akan tetap konsisten dan akurat",
+                "Data mungkin menjadi tidak konsisten atau terjadi kesalahan",
+                "Database akan berjalan lebih cepat",
+                "Tidak ada efek sama sekali",
+                "Database akan otomatis memperbaiki kesalahan"
+            ],
+            "answer": "Data mungkin menjadi tidak konsisten atau terjadi kesalahan"
+        },
+        {
+            "question": "Jenis relationship yang memungkinkan satu baris dalam tabel A terkait dengan banyak baris dalam tabel B adalah:",
+            "choices": [
+                "One-to-one",
+                "One-to-many",
+                "Many-to-one",
+                "Many-to-many",
+                "One-to-all"
+            ],
+            "answer": "One-to-many"
+        },
+        {
+            "question": "Dalam konteks Microsoft Access, primary key biasanya:",
+            "choices": [
+                "Kolom dengan nilai duplikat",
+                "Kolom yang selalu bernilai null",
+                "Kolom dengan nilai unik yang mengidentifikasi setiap baris",
+                "Kolom yang tidak digunakan dalam relationship",
+                "Kolom yang berisi data teks panjang"
+            ],
+            "answer": "Kolom dengan nilai unik yang mengidentifikasi setiap baris"
+        },
+        {
+            "question": "Pada sesi 'Membuat Tautan Tabel Bagian 2', mahasiswa ditugaskan untuk:",
+            "choices": [
+                "Menghapus relationship yang ada",
+                "Menambahkan hubungan tambahan antara tabel-tabel yang tersisa",
+                "Mengganti nama semua tabel",
+                "Membuat query untuk laporan",
+                "Mengimpor data dari sumber lain"
+            ],
+            "answer": "Menambahkan hubungan tambahan antara tabel-tabel yang tersisa"
+        },
+        {
+            "question": "Bagaimana cara menghubungkan tabel yang sebelumnya tidak terkait?",
+            "choices": [
+                "Dengan menambahkan foreign key yang sesuai",
+                "Dengan menghapus primary key",
+                "Dengan mengubah nama database",
+                "Dengan menghapus semua data",
+                "Dengan menginstal ulang Microsoft Access"
+            ],
+            "answer": "Dengan menambahkan foreign key yang sesuai"
+        },
+        {
+            "question": "Apa yang dimaksud dengan one-to-one relationship?",
+            "choices": [
+                "Satu baris dalam tabel A terkait dengan banyak baris dalam tabel B",
+                "Satu baris dalam tabel A terkait dengan satu baris dalam tabel B",
+                "Banyak baris dalam tabel A terkait dengan banyak baris dalam tabel B",
+                "Tidak ada hubungan antara tabel",
+                "Semua baris dalam tabel A terkait dengan semua baris dalam tabel B"
+            ],
+            "answer": "Satu baris dalam tabel A terkait dengan satu baris dalam tabel B"
+        },
+        {
+            "question": "Salah satu tujuan dari sesi 'Mengedit dan Menghubungkan Tabel' adalah:",
+            "choices": [
+                "Mengajarkan cara memodifikasi atau menghapus relationship jika diperlukan",
+                "Menghapus semua data dalam database",
+                "Mengganti tampilan antarmuka Microsoft Access",
+                "Mengubah bahasa pemrograman yang digunakan",
+                "Menambahkan efek animasi pada tabel"
+            ],
+            "answer": "Mengajarkan cara memodifikasi atau menghapus relationship jika diperlukan"
+        },
+        {
+            "question": "Apa yang harus diperhatikan saat membuat relationship untuk memastikan data tetap konsisten?",
+            "choices": [
+                "Ukuran font dalam tabel",
+                "Tipe data dari kolom yang dihubungkan harus kompatibel",
+                "Warna latar belakang tabel",
+                "Jumlah baris dalam setiap tabel",
+                "Nama pengguna yang login"
+            ],
+            "answer": "Tipe data dari kolom yang dihubungkan harus kompatibel"
+        },
+        {
+            "question": "Many-to-many relationship biasanya diimplementasikan dengan:",
+            "choices": [
+                "Menggunakan tabel ketiga sebagai tabel penghubung",
+                "Menggabungkan semua tabel menjadi satu",
+                "Menggunakan query khusus",
+                "Menghapus primary key",
+                "Menggunakan fitur canggih Microsoft Access"
+            ],
+            "answer": "Menggunakan tabel ketiga sebagai tabel penghubung"
+        },
+        {
+            "question": "Apa manfaat dari memastikan referential integrity dalam database?",
+            "choices": [
+                "Memungkinkan perubahan data tanpa batas",
+                "Mencegah perubahan yang dapat menyebabkan inkonsistensi data",
+                "Memperbesar ukuran database secara signifikan",
+                "Mengizinkan data duplikat dalam primary key",
+                "Mengurangi keamanan data"
+            ],
+            "answer": "Mencegah perubahan yang dapat menyebabkan inkonsistensi data"
+        }
+    ];
 })();

@@ -10,7 +10,7 @@
   // Validasi waktu akses
   function validateAccess() {
     const now = new Date();
-    const startTime = new Date('2024-10-01T10:00:00');
+    const startTime = new Date('2024-10-01T10:05:00');
     const endTime = new Date('2024-10-01T10:20:00');
 
     if (now < startTime || now > endTime) {

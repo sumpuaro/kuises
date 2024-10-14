@@ -10,8 +10,8 @@
   // Validasi waktu akses
   function validateAccess() {
     const now = new Date();
-    const startTime = new Date('2024-10-14T12:00:00');
-    const endTime = new Date('2024-10-08T12:30:00');
+    const startTime = new Date('2024-10-14T12:10:00');
+    const endTime = new Date('2024-10-14T12:40:00');
 
     if (now < startTime || now > endTime) {
         alert(`Akses kuis hanya tersedia pada ${startTime.toLocaleDateString()} pukul ${startTime.toLocaleTimeString()} - ${endTime.toLocaleTimeString()}.`);

@@ -20,9 +20,7 @@ body {
     padding: 20px;
 }
 
-h1,
-h2,
-h3 {
+h1, h2, h3 {
     color: var(--primary-color);
     text-align: center;
 }
@@ -154,7 +152,7 @@ button:hover {
     .container {
         padding: 10px;
     }
-
+    
     button {
         width: 100%;
     }

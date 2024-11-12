@@ -1,4 +1,5 @@
-(function(){
+(function () {
+    const quizId = "Kuis 0.8"; // Ubah ini untuk setiap kuis yang berbeda
     let currentQuestion = 0;
     let score = 0;
     let timer;
@@ -9,11 +10,11 @@
     // Validasi waktu akses
     function validateAccess() {
         const now = new Date();
-        const startTime = new Date('2023-09-03T10:00:00');
-        const endTime = new Date('2025-09-03T10:30:00');
+        const startTime = new Date('2024-11-12T10:00:00');
+        const endTime = new Date('2024-11-12T10:20:00');
 
         if (now < startTime || now > endTime) {
-            alert('Akses kuis hanya tersedia pada 3 September 2024 pukul 10:00 - 10:30.');
+            alert(`Akses kuis hanya tersedia pada ${startTime.toLocaleDateString()} pukul ${startTime.toLocaleTimeString()} - ${endTime.toLocaleTimeString()}.`);
             return false;
         }
         return true;
@@ -21,9 +22,12 @@
 
     // Cek akses ganda
     function checkDuplicateAccess(fullname, nim, angkatan) {
-        const accessKey = `${fullname}_${nim}_${angkatan}`;
+        const accessKey = `${quizId}_${fullname}_${nim}_${angkatan}`;
         if (localStorage.getItem(accessKey)) {
-            alert('Anda sudah mengakses kuis ini sebelumnya.');
+            if (confirm('Anda sudah mengakses kuis ini sebelumnya. Apakah Anda ingin mencoba lagi? Ini akan menghapus akses sebelumnya.')) {
+                localStorage.removeItem(accessKey);
+                return true;
+            }
             return false;
         }
         localStorage.setItem(accessKey, 'true');
@@ -32,19 +36,19 @@
 
     // Fullscreen functions
     function enterFullscreen(element) {
-        if(element.requestFullscreen) {
+        if (element.requestFullscreen) {
             element.requestFullscreen();
-        } else if(element.mozRequestFullScreen) {
+        } else if (element.mozRequestFullScreen) {
             element.mozRequestFullScreen();
-        } else if(element.webkitRequestFullscreen) {
+        } else if (element.webkitRequestFullscreen) {
             element.webkitRequestFullscreen();
-        } else if(element.msRequestFullscreen) {
+        } else if (element.msRequestFullscreen) {
             element.msRequestFullscreen();
         }
     }
 
     function handleFullscreenChange() {
-        if (!document.fullscreenElement && !document.webkitFullscreenElement && 
+        if (!document.fullscreenElement && !document.webkitFullscreenElement &&
             !document.mozFullScreenElement && !document.msFullscreenElement) {
             if (isQuizActive) {
                 alert("Mohon tetap dalam mode fullscreen selama kuis berlangsung.");
@@ -54,13 +58,13 @@
     }
 
     function exitFullscreen() {
-        if(document.exitFullscreen) {
+        if (document.exitFullscreen) {
             document.exitFullscreen();
-        } else if(document.mozCancelFullScreen) {
+        } else if (document.mozCancelFullScreen) {
             document.mozCancelFullScreen();
-        } else if(document.webkitExitFullscreen) {
+        } else if (document.webkitExitFullscreen) {
             document.webkitExitFullscreen();
-        } else if(document.msExitFullscreen) {
+        } else if (document.msExitFullscreen) {
             document.msExitFullscreen();
         }
     }
@@ -71,11 +75,12 @@
             event.stopPropagation();
             return false;
         }
-        
+
         if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
             enterFullscreen(document.documentElement);
         }
     }
+
     // Quiz functions
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
@@ -106,6 +111,7 @@
         document.addEventListener('MSFullscreenChange', handleFullscreenChange);
 
         document.getElementById('registration-form').classList.add('hidden');
+        document.getElementById('clear-access-btn').classList.add('hidden');
         document.getElementById('quiz-container').classList.remove('hidden');
 
         shuffleArray(questions);
@@ -151,7 +157,7 @@
         if (selectedOption) {
             const answer = selectedOption.textContent;
             if (answer === questions[currentQuestion].answer) {
-                score += 5;
+                score += 4;
             }
         }
 
@@ -197,26 +203,76 @@
         document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
     }
 
+    function sendResultToGoogleSheet(fullName, nim, score) {
+        const webAppUrl = 'https://script.google.com/macros/s/AKfycbxWtm1SKkZ9oDhvvJ9qsuDU2MslV6OGwnFYT-SoB-jVx8TUMtcFL7uORzluODKKkcL0/exec';
+        const now = new Date();
+        const date = now.toLocaleDateString('id-ID');
+        const time = now.toLocaleTimeString('id-ID');
+
+        const data = {
+            fullName: fullName,
+            nim: nim,
+            score: score,
+            quizTitle: `${quizId} Praktikum PSI`,
+            date: date,
+            time: time
+        };
+
+        fetch(webAppUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                console.log('Data berhasil dikirim ke Google Sheet');
+                console.log('Data yang dikirim:', JSON.stringify(data));
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat mengirim data. Silakan coba lagi.');
+            });
+    }
+
+    function clearAllAccess() {
+        Object.keys(localStorage).forEach(key => {
+            if (key.startsWith(quizId)) {
+                localStorage.removeItem(key);
+            }
+        });
+        alert('Semua data akses untuk kuis ini telah dihapus.');
+    }
+
     // Event listeners
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
+        const quizInfoElement = document.getElementById('quiz-info');
+        if (quizInfoElement) {
+            quizInfoElement.textContent = `${quizId}. Selamat Bekerja Semoga Sukses.`;
+        }
+
+        const clearAccessBtn = document.getElementById('clear-access-btn');
+        clearAccessBtn.addEventListener('click', clearAllAccess);
+        clearAccessBtn.classList.remove('hidden');
+
         document.getElementById('start-btn').addEventListener('click', startQuiz);
         document.getElementById('submit-btn').addEventListener('click', submitAnswer);
-        document.getElementById('exit-fullscreen').addEventListener('click', function() {
+        document.getElementById('exit-fullscreen').addEventListener('click', function () {
             isQuizActive = false;
             exitFullscreen();
         });
     });
 
     // Prevent shortcuts and right-click
-    window.blockShortcuts = function(e) {
-        // Prevent F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
-        if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
+    window.blockShortcuts = function (e) {
+        if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
             e.preventDefault();
             return false;
         }
     };
 
-    document.oncontextmenu = function(e) {
+    document.oncontextmenu = function (e) {
         e.preventDefault();
         return false;
     };
@@ -227,146 +283,282 @@
         history.go(1);
     };
 
-
-// Prevent back function
-history.pushState(null, null, location.href);
-window.onpopstate = function () {
-    history.go(1);
-};
-
-// Tambahkan fungsi sendResultToGoogleSheet di sini
-function sendResultToGoogleSheet(fullName, nim, score) {
-  const webAppUrl = 'https://script.google.com/macros/s/AKfycbyAhd57b2t_OUTL104DxVE6e4vqNZV3EMyDOzElZEnLRXVqXAAAyA1bDJ_3Cds3_i8V/exec';
-  const now = new Date();
-  const date = now.toISOString().split('T')[0]; // Format: YYYY-MM-DD
-  const time = now.toTimeString().split(' ')[0]; // Format: HH:MM:SS
-
-  const data = {
-    fullName: fullName,
-    nim: nim,
-    score: score,
-    date: date,
-    time: time
-  };
-
-  fetch(webAppUrl, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: {
-      'Content-Type': 'text/plain',
-    },
-    body: JSON.stringify(data)
-  })
-  .then(response => {
-    console.log('Data berhasil dikirim ke Google Sheet');
-    console.log('Data yang dikirim:', JSON.stringify(data));
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
-}
-
     // Quiz questions
     questions = [
-  {
-    "question": "Apa fungsi utama dari kunci primer (primary key) dalam sebuah tabel?",
-    "choices": ["Untuk mengenkripsi data", "Untuk mengindeks seluruh kolom", "Untuk mengidentifikasi secara unik setiap baris dalam tabel", "Untuk mengurutkan data secara otomatis", "Untuk membatasi jumlah baris dalam tabel"],
-    "answer": "Untuk mengidentifikasi secara unik setiap baris dalam tabel"
-  },
-  {
-    "question": "Tipe data apa yang paling tepat untuk menyimpan angka desimal dalam Microsoft Access?",
-    "choices": ["Integer", "Text", "Currency", "Long Integer", "Double"],
-    "answer": "Double"
-  },
-  {
-    "question": "Bagaimana cara tercepat untuk membuat daftar drop-down dalam sebuah kolom di Microsoft Access?",
-    "choices": ["Menggunakan Macro", "Membuat Query", "Menggunakan Lookup Wizard", "Membuat Form", "Menggunakan VBA"],
-    "answer": "Menggunakan Lookup Wizard"
-  },
-  {
-    "question": "Apa yang dimaksud dengan mengindeks kolom dalam Microsoft Access?",
-    "choices": ["Mengurutkan data dalam kolom", "Membuat kolom menjadi kunci primer", "Meningkatkan kecepatan pencarian dan pengurutan data", "Menambahkan deskripsi ke kolom", "Mengenkripsi data dalam kolom"],
-    "answer": "Meningkatkan kecepatan pencarian dan pengurutan data"
-  },
-  {
-    "question": "Berapa banyak kunci primer yang dapat dimiliki oleh sebuah tabel?",
-    "choices": ["Tidak ada", "Satu", "Dua", "Tiga", "Tidak terbatas"],
-    "answer": "Satu"
-  },
-  {
-    "question": "Apa fungsi dari aturan validasi data dalam Microsoft Access?",
-    "choices": ["Untuk mengenkripsi data", "Untuk membatasi nilai yang dapat dimasukkan ke dalam kolom", "Untuk membuat laporan otomatis", "Untuk menghubungkan tabel", "Untuk membuat query"],
-    "answer": "Untuk membatasi nilai yang dapat dimasukkan ke dalam kolom"
-  },
-  {
-    "question": "Tipe data apa yang paling tepat untuk menyimpan tanggal dan waktu dalam Microsoft Access?",
-    "choices": ["Text", "Number", "Date/Time", "Currency", "Yes/No"],
-    "answer": "Date/Time"
-  },
-  {
-    "question": "Apa yang terjadi jika Anda mencoba memasukkan data duplikat ke dalam kolom yang diatur sebagai kunci primer?",
-    "choices": ["Data akan disimpan tanpa peringatan", "Access akan menolak data dan menampilkan pesan kesalahan", "Data akan otomatis diubah menjadi unik", "Tabel akan terhapus", "Basis data akan rusak"],
-    "answer": "Access akan menolak data dan menampilkan pesan kesalahan"
-  },
-  {
-    "question": "Bagaimana cara menambahkan kolom baru ke tabel yang sudah ada di Microsoft Access?",
-    "choices": ["Hanya bisa dilakukan saat membuat tabel baru", "Melalui Design View tabel", "Hanya melalui query", "Menggunakan makro", "Tidak bisa menambahkan kolom setelah tabel dibuat"],
-    "answer": "Melalui Design View tabel"
-  },
-  {
-    "question": "Apa keuntungan menggunakan Lookup Wizard untuk membuat daftar drop-down?",
-    "choices": ["Meningkatkan keamanan data", "Mempercepat entri data dan mengurangi kesalahan", "Mengenkripsi data dalam kolom", "Membuat laporan otomatis", "Meningkatkan kecepatan query"],
-    "answer": "Mempercepat entri data dan mengurangi kesalahan"
-  },
-  {
-    "question": "Apa yang dimaksud dengan \"field size\" dalam pengaturan kolom tipe Text?",
-    "choices": ["Ukuran font yang digunakan", "Jumlah karakter maksimum yang dapat disimpan", "Lebar kolom saat ditampilkan", "Jumlah baris dalam tabel", "Ukuran file database"],
-    "answer": "Jumlah karakter maksimum yang dapat disimpan"
-  },
-  {
-    "question": "Bagaimana cara mengubah urutan kolom dalam sebuah tabel di Microsoft Access?",
-    "choices": ["Hanya bisa dilakukan saat membuat tabel", "Menggunakan query", "Melalui Design View dengan drag and drop", "Menggunakan makro", "Tidak bisa mengubah urutan kolom"],
-    "answer": "Melalui Design View dengan drag and drop"
-  },
-  {
-    "question": "Apa fungsi dari pengaturan \"Required\" pada properti kolom?",
-    "choices": ["Membuat kolom menjadi kunci primer", "Mengharuskan pengguna memasukkan nilai", "Membuat kolom hanya bisa dibaca", "Mengenkripsi data dalam kolom", "Membuat kolom tidak terlihat"],
-    "answer": "Mengharuskan pengguna memasukkan nilai"
-  },
-  {
-    "question": "Tipe data apa yang paling tepat untuk menyimpan nilai boolean (Ya/Tidak) dalam Microsoft Access?",
-    "choices": ["Text", "Number", "Currency", "Yes/No", "Memo"],
-    "answer": "Yes/No"
-  },
-  {
-    "question": "Apa yang terjadi jika Anda mengubah tipe data sebuah kolom yang sudah berisi data?",
-    "choices": ["Data akan selalu hilang", "Access akan mencoba mengkonversi data jika memungkinkan", "Tabel akan terhapus", "Basis data akan rusak", "Tidak bisa mengubah tipe data setelah ada data"],
-    "answer": "Access akan mencoba mengkonversi data jika memungkinkan"
-  },
-  {
-    "question": "Bagaimana cara membuat kolom yang secara otomatis menambah nilainya untuk setiap baris baru?",
-    "choices": ["Menggunakan tipe data AutoNumber", "Membuat query", "Menggunakan makro", "Menggunakan VBA", "Tidak mungkin dilakukan di Access"],
-    "answer": "Menggunakan tipe data AutoNumber"
-  },
-  {
-    "question": "Apa fungsi dari pengaturan \"Default Value\" pada properti kolom?",
-    "choices": ["Membuat kolom menjadi kunci primer", "Menetapkan nilai awal saat menambahkan record baru", "Membatasi nilai yang bisa dimasukkan", "Mengenkripsi data dalam kolom", "Membuat kolom hanya bisa dibaca"],
-    "answer": "Menetapkan nilai awal saat menambahkan record baru"
-  },
-  {
-    "question": "Bagaimana cara terbaik untuk membatasi nilai dalam sebuah kolom agar hanya bisa diisi dengan angka positif?",
-    "choices": ["Menggunakan tipe data Text", "Menggunakan aturan validasi", "Menggunakan Lookup Wizard", "Menggunakan query", "Menggunakan makro"],
-    "answer": "Menggunakan aturan validasi"
-  },
-  {
-    "question": "Apa yang dimaksud dengan \"Cascade Update Related Fields\" dalam pengaturan relasi antar tabel?",
-    "choices": ["Menghapus semua data terkait", "Memperbarui data terkait saat kunci primer diubah", "Membuat backup otomatis", "Mengenkripsi data terkait", "Membuat query otomatis"],
-    "answer": "Memperbarui data terkait saat kunci primer diubah"
-  },
-  {
-    "question": "Apa fungsi dari tipe data \"Attachment\" dalam Microsoft Access?",
-    "choices": ["Untuk menyimpan file dalam database", "Untuk membuat hyperlink", "Untuk menyimpan gambar saja", "Untuk membuat relasi antar tabel", "Untuk membuat form otomatis"],
-    "answer": "Untuk menyimpan file dalam database"
-  }
+        {
+            "question": "Apa tujuan utama penggunaan validasi data dalam Microsoft Access?",
+            "choices": [
+                "Mempercepat proses pengolahan data",
+                "Membuat tampilan database lebih menarik",
+                "Memastikan data yang dimasukkan sesuai dengan aturan dan akurat",
+                "Mengurangi ukuran file database",
+                "Mengoptimasi kinerja query"
+            ],
+            "answer": "Memastikan data yang dimasukkan sesuai dengan aturan dan akurat"
+        },
+        {
+            "question": "Dalam Microsoft Access, ekspresi (expression) digunakan untuk...",
+            "choices": [
+                "Membuat struktur tabel baru",
+                "Melakukan operasi matematika dan manipulasi teks pada data",
+                "Menghapus record yang tidak diperlukan",
+                "Mengatur tampilan form",
+                "Membuat backup database"
+            ],
+            "answer": "Melakukan operasi matematika dan manipulasi teks pada data"
+        },
+        {
+            "question": "Komponen apa yang wajib ada dalam pembuatan laporan dasar Microsoft Access?",
+            "choices": [
+                "Gambar latar belakang dan logo",
+                "Video tutorial penggunaan",
+                "Header, footer, dan konten data",
+                "Animasi dan efek visual",
+                "Musik latar dan suara"
+            ],
+            "answer": "Header, footer, dan konten data"
+        },
+        {
+            "question": "Bagaimana cara yang tepat untuk menangani data yang tidak valid dalam Microsoft Access?",
+            "choices": [
+                "Membiarkan data tetap tersimpan",
+                "Menghapus seluruh record",
+                "Menampilkan pesan kesalahan dan mencegah penyimpanan",
+                "Mengabaikan validasi data",
+                "Menonaktifkan form input"
+            ],
+            "answer": "Menampilkan pesan kesalahan dan mencegah penyimpanan"
+        },
+        {
+            "question": "Apa karakteristik utama dari laporan kompleks dalam Microsoft Access?",
+            "choices": [
+                "Hanya menampilkan satu jenis data",
+                "Menggunakan multiple sumber data dan perhitungan lanjut",
+                "Tidak memerlukan header",
+                "Tidak bisa dicetak",
+                "Hanya bisa dibuka oleh admin"
+            ],
+            "answer": "Menggunakan multiple sumber data dan perhitungan lanjut"
+        },
+        {
+            "question": "Bagaimana jenis data Yes/No direpresentasikan dalam form Microsoft Access?",
+            "choices": [
+                "Sebagai angka 1 dan 0",
+                "Sebagai teks 'Ya' dan 'Tidak'",
+                "Sebagai checkbox atau kotak centang",
+                "Sebagai tombol radio",
+                "Sebagai dropdown menu"
+            ],
+            "answer": "Sebagai checkbox atau kotak centang"
+        },
+        {
+            "question": "Apa fungsi utama fitur lampiran (attachment) dalam Microsoft Access?",
+            "choices": [
+                "Menyimpan file eksternal dalam database",
+                "Membuat backup otomatis",
+                "Mengkompresi database",
+                "Membuat shortcut file",
+                "Menghubungkan antar tabel"
+            ],
+            "answer": "Menyimpan file eksternal dalam database"
+        },
+        {
+            "question": "Apa tujuan utama penggunaan form navigasi dalam Microsoft Access?",
+            "choices": [
+                "Mencari data dalam tabel",
+                "Membuat laporan otomatis",
+                "Memudahkan perpindahan antar form dalam database",
+                "Menghapus record",
+                "Mengubah struktur tabel"
+            ],
+            "answer": "Memudahkan perpindahan antar form dalam database"
+        },
+        {
+            "question": "Dalam pengaturan form Microsoft Access, apa fungsi dari tab order?",
+            "choices": [
+                "Mengurutkan data dalam tabel",
+                "Mengatur urutan form yang dibuka",
+                "Mengatur urutan perpindahan kursor saat menekan tombol Tab",
+                "Mengurutkan field dalam tabel",
+                "Mengatur urutan laporan"
+            ],
+            "answer": "Mengatur urutan perpindahan kursor saat menekan tombol Tab"
+        },
+        {
+            "question": "Apa yang dimaksud dengan sub-laporan (subreport) dalam Microsoft Access?",
+            "choices": [
+                "Laporan cadangan",
+                "Laporan yang ditempatkan di dalam laporan utama",
+                "Laporan yang belum selesai",
+                "Laporan yang sudah dihapus",
+                "Laporan versi lama"
+            ],
+            "answer": "Laporan yang ditempatkan di dalam laporan utama"
+        },
+        {
+            "question": "Bagaimana cara meningkatkan tampilan form di Microsoft Access?",
+            "choices": [
+                "Menghapus semua kontrol",
+                "Menggunakan tema, warna, dan elemen desain yang sesuai",
+                "Menonaktifkan semua validasi",
+                "Menghilangkan semua label",
+                "Menghapus semua tombol"
+            ],
+            "answer": "Menggunakan tema, warna, dan elemen desain yang sesuai"
+        },
+        {
+            "question": "Apa manfaat utama validasi data dalam Microsoft Access?",
+            "choices": [
+                "Mempercepat input data",
+                "Menghemat ruang penyimpanan",
+                "Menjamin integritas dan akurasi data",
+                "Mempercantik tampilan form",
+                "Mengurangi jumlah tabel"
+            ],
+            "answer": "Menjamin integritas dan akurasi data"
+        },
+        {
+            "question": "Jenis file apa yang dapat disimpan sebagai lampiran dalam Microsoft Access?",
+            "choices": [
+                "Hanya file teks",
+                "Hanya file gambar",
+                "Berbagai jenis file seperti dokumen, gambar, dan file lainnya",
+                "Hanya file database",
+                "Hanya file Excel"
+            ],
+            "answer": "Berbagai jenis file seperti dokumen, gambar, dan file lainnya"
+        },
+        {
+            "question": "Apa kemampuan yang dimiliki ekspresi dalam Microsoft Access?",
+            "choices": [
+                "Hanya melakukan penjumlahan",
+                "Hanya memanipulasi teks",
+                "Melakukan perhitungan matematik dan manipulasi data dengan logika",
+                "Hanya membuat grafik",
+                "Hanya mengurutkan data"
+            ],
+            "answer": "Melakukan perhitungan matematik dan manipulasi data dengan logika"
+        },
+        {
+            "question": "Bagaimana langkah dasar membuat laporan dalam Microsoft Access?",
+            "choices": [
+                "Langsung mencetak database",
+                "Memilih data yang relevan dan menyusunnya secara terstruktur",
+                "Mengimpor laporan dari Excel",
+                "Menggabungkan semua tabel",
+                "Mengkonversi form menjadi laporan"
+            ],
+            "answer": "Memilih data yang relevan dan menyusunnya secara terstruktur"
+        },
+        {
+            "question": "Apa yang dimaksud dengan form event dalam Microsoft Access?",
+            "choices": [
+                "Jadwal penggunaan form",
+                "Kejadian yang memicu aksi tertentu dalam form",
+                "Daftar form yang tersedia",
+                "Cara membuka form",
+                "Waktu pembuatan form"
+            ],
+            "answer": "Kejadian yang memicu aksi tertentu dalam form"
+        },
+        {
+            "question": "Di mana ekspresi dapat diterapkan dalam Microsoft Access?",
+            "choices": [
+                "Hanya di dalam tabel",
+                "Hanya di dalam query",
+                "Dalam field tabel, query, form, dan laporan",
+                "Hanya di dalam form",
+                "Hanya di dalam laporan"
+            ],
+            "answer": "Dalam field tabel, query, form, dan laporan"
+        },
+        {
+            "question": "Apa fungsi utama format teks dalam laporan Microsoft Access?",
+            "choices": [
+                "Menghemat tinta printer",
+                "Meningkatkan keterbacaan dan presentasi data",
+                "Mengurangi ukuran file",
+                "Mempercepat proses cetak",
+                "Mengenkripsi data"
+            ],
+            "answer": "Meningkatkan keterbacaan dan presentasi data"
+        },
+        {
+            "question": "Apa yang dimaksud dengan properti form dalam Microsoft Access?",
+            "choices": [
+                "Harga pembuatan form",
+                "Pengaturan yang mengontrol perilaku dan tampilan form",
+                "Ukuran file form",
+                "Alamat penyimpanan form",
+                "Pembuat form"
+            ],
+            "answer": "Pengaturan yang mengontrol perilaku dan tampilan form"
+        },
+        {
+            "question": "Bagaimana cara meningkatkan efisiensi navigasi dalam database Microsoft Access?",
+            "choices": [
+                "Mengurangi jumlah form",
+                "Mengimplementasikan sistem form navigasi yang terstruktur",
+                "Menghapus semua form",
+                "Menonaktifkan beberapa form",
+                "Menyembunyikan form"
+            ],
+            "answer": "Mengimplementasikan sistem form navigasi yang terstruktur"
+        },
+        {
+            "question": "Apa manfaat pengelompokan data dalam laporan Microsoft Access?",
+            "choices": [
+                "Mengurangi jumlah halaman",
+                "Mengorganisasi informasi secara logis dan terstruktur",
+                "Mempercepat proses cetak",
+                "Menghemat tinta printer",
+                "Mengurangi ukuran file"
+            ],
+            "answer": "Mengorganisasi informasi secara logis dan terstruktur"
+        },
+        {
+            "question": "Elemen visual apa yang dapat ditambahkan ke laporan untuk visualisasi data?",
+            "choices": [
+                "Video tutorial",
+                "Musik latar",
+                "Grafik, bagan, dan elemen visual lainnya",
+                "Animasi 3D",
+                "Game interaktif"
+            ],
+            "answer": "Grafik, bagan, dan elemen visual lainnya"
+        },
+        {
+            "question": "Bagaimana cara membuat form yang user-friendly dalam Microsoft Access?",
+            "choices": [
+                "Menghilangkan semua label",
+                "Menggunakan desain yang intuitif dan tata letak yang logis",
+                "Menonaktifkan validasi",
+                "Menghapus semua tombol",
+                "Menyembunyikan field"
+            ],
+            "answer": "Menggunakan desain yang intuitif dan tata letak yang logis"
+        },
+        {
+            "question": "Apa tujuan utama kontrol data input dalam form Microsoft Access?",
+            "choices": [
+                "Mempercepat input data",
+                "Memastikan data yang dimasukkan sesuai format dan valid",
+                "Mengurangi ukuran database",
+                "Mengenkripsi data",
+                "Membatasi akses pengguna"
+            ],
+            "answer": "Memastikan data yang dimasukkan sesuai format dan valid"
+        },
+        {
+            "question": "Bagaimana cara mengatur alur kerja yang efektif dalam form navigasi?",
+            "choices": [
+                "Menghapus semua form",
+                "Mengatur urutan dan hierarki navigasi secara logis",
+                "Menonaktifkan navigasi",
+                "Menyembunyikan tombol navigasi",
+                "Menghilangkan menu"
+            ],
+            "answer": "Mengatur urutan dan hierarki navigasi secara logis"
+        }
     ];
 })();
